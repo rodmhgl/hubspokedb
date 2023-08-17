@@ -1,68 +1,35 @@
-locals {
-  regions = toset(["eastus", "eastus2"])
-}
-
-resource "random_pet" "rand" {}
-
-resource "azurerm_resource_group" "hub_rg" {
-  for_each = local.regions
-
-  location = each.value
-  name     = module.naming[each.value].resource_group.name
-}
-
-module "naming" {
-  for_each = local.regions
-
-  source  = "Azure/naming/azurerm"
-  version = "0.3.0"
-  prefix  = ["dbdemo", each.value]
-}
-
-output "virtual_networks" {
-  value = module.hubnetworks.virtual_networks
-}
-
-module "hubnetworks" {
-  source  = "Azure/hubnetworking/azurerm"
-  version = "0.2.0"
-
-  hub_virtual_networks = {
-    eastus = {
-      name                            = module.naming["eastus"].firewall.name
-      address_space                   = ["10.0.0.0/16"]
-      location                        = azurerm_resource_group.hub_rg["eastus"].location
-      resource_group_name             = azurerm_resource_group.hub_rg["eastus"].name
-      resource_group_creation_enabled = false
-      resource_group_lock_enabled     = false
-      mesh_peering_enabled            = true
-      routing_address_space           = ["10.0.0.0/16"]
-      firewall = {
-        sku_name              = "AZFW_VNet"
-        sku_tier              = "Standard"
-        subnet_address_prefix = "10.0.1.0/24"
-        threat_intel_mode     = "Off"
-        firewall_policy_id    = azurerm_firewall_policy.fwpolicy.id
-      }
+terraform {
+  required_version = ">=1.5.0"
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "3.67.0"
     }
-    eastus2 = {
-      name                            = module.naming["eastus2"].firewall.name
-      address_space                   = ["10.1.0.0/16"]
-      location                        = azurerm_resource_group.hub_rg["eastus2"].location
-      resource_group_name             = azurerm_resource_group.hub_rg["eastus2"].name
-      resource_group_creation_enabled = false
-      resource_group_lock_enabled     = false
-      mesh_peering_enabled            = true
-      routing_address_space           = ["10.1.0.0/16"]
-      firewall = {
-        sku_name              = "AZFW_VNet"
-        sku_tier              = "Standard"
-        subnet_address_prefix = "10.1.1.0/24"
-        threat_intel_mode     = "Off"
-        firewall_policy_id    = azurerm_firewall_policy.fwpolicy.id
-      }
-    }
+    # random = {
+    #   source  = "hashicorp/random"
+    #   version = "3.5.1"
+    # }
   }
 
-  depends_on = [azurerm_firewall_policy_rule_collection_group.allow_internal]
+  backend "azurerm" {
+    resource_group_name  = "tfstate"
+    storage_account_name = "tfstate6982"
+    container_name       = "tfstate"
+    # key                  = "db/nonprod/hub_landing_zone.tfstate"
+    subscription_id = "2b94710c-f41d-430c-b0ef-c76e2667cae2"
+    # use_oidc             = true
+    # use_azuread_auth     = true
+  }
+}
+
+variable "environment" {
+  type        = string
+  description = "The environment for the landing zone resources."
+  default     = "nprd"
+}
+
+module "hub_network" {
+  source      = "./modules/hub"
+  environment = var.environment
+  prefix      = "dbdemo"
 }

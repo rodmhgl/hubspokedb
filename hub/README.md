@@ -1,45 +1,5 @@
-## Requirements
+# hub
 
-| Name | Version |
-|------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.5.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 3.67.0 |
-| <a name="requirement_random"></a> [random](#requirement\_random) | 3.5.1 |
-
-## Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.67.0 |
-| <a name="provider_random"></a> [random](#provider\_random) | 3.5.1 |
-
-## Modules
-
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_hubnetworks"></a> [hubnetworks](#module\_hubnetworks) | Azure/hubnetworking/azurerm | 0.2.0 |
-| <a name="module_naming"></a> [naming](#module\_naming) | Azure/naming/azurerm | 0.3.0 |
-| <a name="module_naming_firewall_policy"></a> [naming\_firewall\_policy](#module\_naming\_firewall\_policy) | Azure/naming/azurerm | 0.3.0 |
-
-## Resources
-
-| Name | Type |
-|------|------|
-| [azurerm_firewall_policy.fwpolicy](https://registry.terraform.io/providers/hashicorp/azurerm/3.67.0/docs/resources/firewall_policy) | resource |
-| [azurerm_firewall_policy_rule_collection_group.allow_internal](https://registry.terraform.io/providers/hashicorp/azurerm/3.67.0/docs/resources/firewall_policy_rule_collection_group) | resource |
-| [azurerm_resource_group.fwpolicy](https://registry.terraform.io/providers/hashicorp/azurerm/3.67.0/docs/resources/resource_group) | resource |
-| [azurerm_resource_group.hub_rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.67.0/docs/resources/resource_group) | resource |
-| [random_pet.rand](https://registry.terraform.io/providers/hashicorp/random/3.5.1/docs/resources/pet) | resource |
-
-## Inputs
-
-No inputs.
-
-## Outputs
-
-| Name | Description |
-|------|-------------|
-| <a name="output_virtual_networks"></a> [virtual\_networks](#output\_virtual\_networks) | n/a |
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
@@ -47,40 +7,35 @@ No inputs.
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.5.0 |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 3.67.0 |
-| <a name="requirement_random"></a> [random](#requirement\_random) | 3.5.1 |
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.67.0 |
-| <a name="provider_random"></a> [random](#provider\_random) | 3.5.1 |
+No providers.
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_hubnetworks"></a> [hubnetworks](#module\_hubnetworks) | Azure/hubnetworking/azurerm | 0.2.0 |
-| <a name="module_naming"></a> [naming](#module\_naming) | Azure/naming/azurerm | 0.3.0 |
-| <a name="module_naming_firewall_policy"></a> [naming\_firewall\_policy](#module\_naming\_firewall\_policy) | Azure/naming/azurerm | 0.3.0 |
+| <a name="module_hub_network"></a> [hub\_network](#module\_hub\_network) | ./modules/hub | n/a |
 
 ## Resources
 
-| Name | Type |
-|------|------|
-| [azurerm_firewall_policy.fwpolicy](https://registry.terraform.io/providers/hashicorp/azurerm/3.67.0/docs/resources/firewall_policy) | resource |
-| [azurerm_firewall_policy_rule_collection_group.allow_internal](https://registry.terraform.io/providers/hashicorp/azurerm/3.67.0/docs/resources/firewall_policy_rule_collection_group) | resource |
-| [azurerm_resource_group.fwpolicy](https://registry.terraform.io/providers/hashicorp/azurerm/3.67.0/docs/resources/resource_group) | resource |
-| [azurerm_resource_group.hub_rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.67.0/docs/resources/resource_group) | resource |
-| [random_pet.rand](https://registry.terraform.io/providers/hashicorp/random/3.5.1/docs/resources/pet) | resource |
+No resources.
 
 ## Inputs
 
-No inputs.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_environment"></a> [environment](#input\_environment) | The environment for the landing zone resources. | `string` | `"nprd"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_virtual_networks"></a> [virtual\_networks](#output\_virtual\_networks) | n/a |
+| <a name="output_hub_base_firewall_policy_id"></a> [hub\_base\_firewall\_policy\_id](#output\_hub\_base\_firewall\_policy\_id) | n/a |
+| <a name="output_hub_firewalls"></a> [hub\_firewalls](#output\_hub\_firewalls) | n/a |
+| <a name="output_hub_networks"></a> [hub\_networks](#output\_hub\_networks) | n/a |
+| <a name="output_hub_public_ip_prefixes"></a> [hub\_public\_ip\_prefixes](#output\_hub\_public\_ip\_prefixes) | n/a |
+| <a name="output_hub_route_tables"></a> [hub\_route\_tables](#output\_hub\_route\_tables) | n/a |
+| <a name="output_hub_subnet_addressing"></a> [hub\_subnet\_addressing](#output\_hub\_subnet\_addressing) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

@@ -1,12 +1,13 @@
-resource "azurerm_resource_group" "fwpolicy" {
-  location = "eastus"
-  name     = module.naming["eastus"].firewall_policy.name #"fwpolicy-${random_pet.rand.id}"
-}
-
 module "naming_firewall_policy" {
   source  = "Azure/naming/azurerm"
   version = "0.3.0"
   prefix  = ["allow-internal", ]
+}
+
+resource "azurerm_resource_group" "fwpolicy" {
+  location = "eastus"
+  name     = module.naming["eastus"].firewall_policy.name #"fwpolicy-${random_pet.rand.id}"
+  tags     = local.tags
 }
 
 resource "azurerm_firewall_policy" "fwpolicy" {
@@ -14,6 +15,7 @@ resource "azurerm_firewall_policy" "fwpolicy" {
   name                = module.naming_firewall_policy.firewall_policy.name
   location            = azurerm_resource_group.fwpolicy.location
   resource_group_name = azurerm_resource_group.fwpolicy.name
+  tags                = local.tags
 }
 
 resource "azurerm_firewall_policy_rule_collection_group" "allow_internal" {
