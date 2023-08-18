@@ -51,14 +51,14 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.5.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 3.67.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 3.70.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | 3.5.1 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.67.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.70.0 |
 
 ## Modules
 
@@ -74,12 +74,12 @@
 
 | Name | Type |
 |------|------|
-| [azurerm_firewall_policy.fwpolicy](https://registry.terraform.io/providers/hashicorp/azurerm/3.67.0/docs/resources/firewall_policy) | resource |
-| [azurerm_firewall_policy_rule_collection_group.allow_internal](https://registry.terraform.io/providers/hashicorp/azurerm/3.67.0/docs/resources/firewall_policy_rule_collection_group) | resource |
-| [azurerm_public_ip_prefix.this](https://registry.terraform.io/providers/hashicorp/azurerm/3.67.0/docs/resources/public_ip_prefix) | resource |
-| [azurerm_resource_group.fwpolicy](https://registry.terraform.io/providers/hashicorp/azurerm/3.67.0/docs/resources/resource_group) | resource |
-| [azurerm_resource_group.hub_rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.67.0/docs/resources/resource_group) | resource |
-| [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/3.67.0/docs/resources/resource_group) | resource |
+| [azurerm_firewall_policy.fwpolicy](https://registry.terraform.io/providers/hashicorp/azurerm/3.70.0/docs/resources/firewall_policy) | resource |
+| [azurerm_firewall_policy_rule_collection_group.allow_internal](https://registry.terraform.io/providers/hashicorp/azurerm/3.70.0/docs/resources/firewall_policy_rule_collection_group) | resource |
+| [azurerm_public_ip_prefix.this](https://registry.terraform.io/providers/hashicorp/azurerm/3.70.0/docs/resources/public_ip_prefix) | resource |
+| [azurerm_resource_group.fwpolicy](https://registry.terraform.io/providers/hashicorp/azurerm/3.70.0/docs/resources/resource_group) | resource |
+| [azurerm_resource_group.hub_rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.70.0/docs/resources/resource_group) | resource |
+| [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/3.70.0/docs/resources/resource_group) | resource |
 
 ## Inputs
 

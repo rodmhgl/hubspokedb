@@ -1,0 +1,1 @@
+terraform init -input=false -backend-config="key=db/nprd/hub_bastion.tfstate" -reconfigure
