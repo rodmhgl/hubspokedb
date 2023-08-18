@@ -1,3 +1,7 @@
+output "hub_regions" {
+  value = local.regions
+}
+
 output "hub_firewalls" {
   value = module.hubnetworks.firewalls
 }

@@ -11,16 +11,6 @@ terraform {
       version = "3.5.1"
     }
   }
-
-  backend "azurerm" {
-    resource_group_name  = "tfstate"
-    storage_account_name = "tfstate6982"
-    container_name       = "tfstate"
-    key                  = "db/nonprod/hub_landing_zone.tfstate"
-    subscription_id      = "2b94710c-f41d-430c-b0ef-c76e2667cae2"
-    # use_oidc             = true
-    # use_azuread_auth     = true
-  }
 }
 
 provider "azurerm" {

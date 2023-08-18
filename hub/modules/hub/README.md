@@ -95,6 +95,7 @@
 | <a name="output_base_firewall_policy_id"></a> [base\_firewall\_policy\_id](#output\_base\_firewall\_policy\_id) | n/a |
 | <a name="output_hub_firewalls"></a> [hub\_firewalls](#output\_hub\_firewalls) | n/a |
 | <a name="output_hub_networks"></a> [hub\_networks](#output\_hub\_networks) | n/a |
+| <a name="output_hub_regions"></a> [hub\_regions](#output\_hub\_regions) | n/a |
 | <a name="output_hub_route_tables"></a> [hub\_route\_tables](#output\_hub\_route\_tables) | n/a |
 | <a name="output_hub_subnet_addressing"></a> [hub\_subnet\_addressing](#output\_hub\_subnet\_addressing) | n/a |
 | <a name="output_public_ip_prefixes"></a> [public\_ip\_prefixes](#output\_public\_ip\_prefixes) | n/a |
