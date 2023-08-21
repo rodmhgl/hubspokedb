@@ -64,7 +64,6 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_firewall_policy"></a> [firewall\_policy](#module\_firewall\_policy) | Azure/naming/azurerm | 0.3.0 |
 | <a name="module_hubnetworks"></a> [hubnetworks](#module\_hubnetworks) | Azure/hubnetworking/azurerm | 1.1.0 |
 | <a name="module_naming"></a> [naming](#module\_naming) | Azure/naming/azurerm | 0.3.0 |
 | <a name="module_naming_firewall_policy"></a> [naming\_firewall\_policy](#module\_naming\_firewall\_policy) | Azure/naming/azurerm | 0.3.0 |
