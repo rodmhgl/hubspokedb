@@ -26,7 +26,7 @@
     // "shutdownAction": "none",
 
     // Uncomment the next line to run commands after the container is created.
-    "postCreateCommand": "sudo cp -R /tmp/.ssh-localhost/* ~/.ssh && sudo chown -R $(whoami):$(whoami) /tf/caf ~/.ssh && sudo chmod 400 ~/.ssh/* && git config --global core.editor vi && pre-commit install && pre-commit autoupdate",
+    "postCreateCommand": "sudo cp -R /tmp/.ssh-localhost/* ~/.ssh && sudo chown -R $(whoami):$(whoami) /tf/caf ~/.ssh && sudo chmod 400 ~/.ssh/* && git config --global core.editor vi && pre-commit install && pre-commit autoupdate && wget https://github.com/minamijoyo/tfupdate/releases/download/v0.7.2/tfupdate_0.7.2_linux_amd64.tar.gz && tar -xzvf tfupdate_0.7.2_linux_amd64.tar.gz && sudo mv tfupdate /usr/local/bin",
 
     // Add the IDs of extensions you want installed when the container is created in the array below.
     "customizations": {

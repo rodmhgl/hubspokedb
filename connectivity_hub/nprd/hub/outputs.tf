@@ -25,3 +25,7 @@ output "hub_base_firewall_policy_id" {
 output "hub_public_ip_prefixes" {
   value = module.hub_network.public_ip_prefixes
 }
+
+output "hub_private_dns_zones" {
+  value = module.hub_network.private_dns_zones
+}

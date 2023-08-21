@@ -1,5 +1,6 @@
 locals {
-  # regions = var.regions
+  regions = toset(var.regions)
+  # regions = toset(["eastus", "eastus2"])
 
   # virtual_networks = {
   #   for r in var.regions : r => ({
@@ -26,7 +27,7 @@ locals {
 }
 
 module "naming" {
-  for_each = toset(var.regions)
+  for_each = local.regions
 
   source  = "Azure/naming/azurerm"
   version = "0.3.0"
@@ -34,7 +35,7 @@ module "naming" {
 }
 
 data "azurerm_subnet" "bastion" {
-  for_each = toset(var.regions)
+  for_each = local.regions
 
   name                 = "AzureBastionSubnet"
   virtual_network_name = var.virtual_networks[each.value].name
@@ -42,7 +43,7 @@ data "azurerm_subnet" "bastion" {
 }
 
 resource "azurerm_resource_group" "this" {
-  for_each = toset(var.regions)
+  for_each = local.regions
 
   location = each.value
   name     = module.naming[each.value].resource_group.name
@@ -50,7 +51,7 @@ resource "azurerm_resource_group" "this" {
 }
 
 resource "azurerm_public_ip" "bastion" {
-  for_each = toset(var.regions)
+  for_each = local.regions
 
   location                = each.value
   name                    = module.naming[each.value].public_ip.name
@@ -61,22 +62,42 @@ resource "azurerm_public_ip" "bastion" {
   idle_timeout_in_minutes = 4
 }
 
-resource "azurerm_bastion_host" "hub" {
-  for_each = toset(var.regions)
+# resource "azurerm_bastion_host" "hub" {
+#   for_each = toset(local.regions)
 
-  location               = each.value
-  name                   = module.naming[each.value].bastion_host.name
-  resource_group_name    = azurerm_resource_group.this[each.value].name
-  sku                    = "Standard"
-  copy_paste_enabled     = true
-  file_copy_enabled      = true
-  ip_connect_enabled     = true
-  shareable_link_enabled = true
+#   location               = each.value
+#   name                   = module.naming[each.value].bastion_host.name
+#   resource_group_name    = azurerm_resource_group.this[each.value].name
+#   sku                    = "Standard"
+#   copy_paste_enabled     = true
+#   file_copy_enabled      = true
+#   ip_connect_enabled     = true
+#   shareable_link_enabled = true
 
-  ip_configuration {
+#   ip_configuration {
+#     name                 = "bastion-${each.value}-pip"
+#     public_ip_address_id = azurerm_public_ip.bastion[each.value].id
+#     subnet_id            = data.azurerm_subnet.bastion[each.value].id #azurerm_subnet.bastion[each.value].id
+#   }
+
+# }
+
+module "bastion_host" {
+  source = "./BastionHost"
+  # version = ""
+  for_each = local.regions
+
+  name                = module.naming[each.value].bastion_host.name
+  location            = azurerm_resource_group.this[each.value].location
+  resource_group_name = azurerm_resource_group.this[each.value].name
+  tags                = local.tags
+  sku                 = "Standard"
+  copy_paste_enabled  = true
+  file_copy_enabled   = true
+  tunneling_enabled   = true
+  ip_configuration = {
     name                 = "bastion-${each.value}-pip"
-    public_ip_address_id = azurerm_public_ip.bastion[each.value].id
     subnet_id            = data.azurerm_subnet.bastion[each.value].id #azurerm_subnet.bastion[each.value].id
+    public_ip_address_id = azurerm_public_ip.bastion[each.value].id
   }
-
 }

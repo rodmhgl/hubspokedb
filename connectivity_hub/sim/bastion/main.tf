@@ -45,7 +45,7 @@ data "terraform_remote_state" "hub" {
 # }
 
 module "bastion_set" {
-  source = "../../modules/bastion"
+  source = "../../../modules/bastion"
   # version = ""
   environment        = var.environment
   virtual_networks   = local.virtual_networks

@@ -5,8 +5,8 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.5.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 3.70.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.4.6 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >=3.70.0 |
 
 ## Providers
 
@@ -18,16 +18,16 @@
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_bastion_host"></a> [bastion\_host](#module\_bastion\_host) | ./BastionHost | n/a |
 | <a name="module_naming"></a> [naming](#module\_naming) | Azure/naming/azurerm | 0.3.0 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [azurerm_bastion_host.hub](https://registry.terraform.io/providers/hashicorp/azurerm/3.70.0/docs/resources/bastion_host) | resource |
-| [azurerm_public_ip.bastion](https://registry.terraform.io/providers/hashicorp/azurerm/3.70.0/docs/resources/public_ip) | resource |
-| [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/3.70.0/docs/resources/resource_group) | resource |
-| [azurerm_subnet.bastion](https://registry.terraform.io/providers/hashicorp/azurerm/3.70.0/docs/data-sources/subnet) | data source |
+| [azurerm_public_ip.bastion](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip) | resource |
+| [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
+| [azurerm_subnet.bastion](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subnet) | data source |
 
 ## Inputs
 
@@ -42,5 +42,7 @@
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_bastion_out"></a> [bastion\_out](#output\_bastion\_out) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

@@ -21,3 +21,8 @@
 # output "bastion_resource_group_name" {
 #   value = module.bastion.bastion_resource_group_name
 # }
+
+output "bastion_set" {
+  # value = module.bastion_set.bastion_out
+  value = { for k, r in module.bastion_set.bastion_out : k => r.bastion_out }
+}

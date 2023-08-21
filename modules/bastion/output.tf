@@ -17,3 +17,7 @@
 # output "bastion_resource_group_name" {
 #   value = azurerm_bastion_host.hub.resource_group_name
 # }
+
+output "bastion_out" {
+  value = module.bastion_host
+}

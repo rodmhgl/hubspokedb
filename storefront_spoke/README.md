@@ -2,8 +2,8 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.5.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 3.67.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.4.6 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >=3.70.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | 3.5.1 |
 
 ## Providers
@@ -24,8 +24,8 @@
 
 | Name | Type |
 |------|------|
-| [azurerm_resource_group.storefront_rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.67.0/docs/resources/resource_group) | resource |
-| [azurerm_subnet.aks_nodes](https://registry.terraform.io/providers/hashicorp/azurerm/3.67.0/docs/resources/subnet) | resource |
+| [azurerm_resource_group.storefront_rg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
+| [azurerm_subnet.aks_nodes](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet) | resource |
 | [terraform_remote_state.hub](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) | data source |
 
 ## Inputs
@@ -42,8 +42,8 @@ No outputs.
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.5.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 3.67.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.4.6 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >=3.70.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | 3.5.1 |
 
 ## Providers
@@ -64,8 +64,8 @@ No outputs.
 
 | Name | Type |
 |------|------|
-| [azurerm_resource_group.storefront_rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.67.0/docs/resources/resource_group) | resource |
-| [azurerm_subnet.aks_nodes](https://registry.terraform.io/providers/hashicorp/azurerm/3.67.0/docs/resources/subnet) | resource |
+| [azurerm_resource_group.storefront_rg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
+| [azurerm_subnet.aks_nodes](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet) | resource |
 | [terraform_remote_state.hub](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) | data source |
 
 ## Inputs

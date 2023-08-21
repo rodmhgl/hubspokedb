@@ -17,7 +17,6 @@ locals {
 
   tags = {
     # environment = var.environment
-    module = path.root
   }
 
   landing_zone_state_key = "db/${lower(var.environment)}/hub_landing_zone.tfstate"
@@ -34,16 +33,6 @@ data "terraform_remote_state" "hub" {
     subscription_id      = "2b94710c-f41d-430c-b0ef-c76e2667cae2"
   }
 }
-
-# module "bastion" {
-#   # for_each = local.regions
-
-#   source = "../../modules/bastion"
-#   # version = ""
-#   virtual_networks   = local.virtual_networks[each.key]
-#   regions            = each.key
-#   public_ip_prefixes = local.public_ip_prefixes[each.key]
-# }
 
 module "bastion_set" {
   source = "../../../modules/bastion"

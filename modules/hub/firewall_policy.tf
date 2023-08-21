@@ -4,8 +4,16 @@ module "naming_firewall_policy" {
   prefix  = ["allow-internal", ]
 }
 
+module "firewall_policy" {
+  source  = "Azure/naming/azurerm"
+  version = "0.3.0"
+  # resource group
+  # policy
+  # rule collection group
+}
+
 resource "azurerm_resource_group" "fwpolicy" {
-  location = "eastus"
+  location = local.regions[0]
   name     = module.naming["eastus"].firewall_policy.name #"fwpolicy-${random_pet.rand.id}"
   tags     = local.tags
 }

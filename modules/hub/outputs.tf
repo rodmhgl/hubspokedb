@@ -25,3 +25,9 @@ output "base_firewall_policy_id" {
 output "public_ip_prefixes" {
   value = azurerm_public_ip_prefix.this
 }
+
+output "private_dns_zones" {
+  value = {
+    for key, zone in module.private_dns_zones : key => zone.zone_out
+  }
+}
