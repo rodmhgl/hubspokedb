@@ -1,6 +1,3 @@
-# bastion
-
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
 | Name | Version |
@@ -45,4 +42,3 @@
 | Name | Description |
 |------|-------------|
 | <a name="output_bastion_out"></a> [bastion\_out](#output\_bastion\_out) | n/a |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

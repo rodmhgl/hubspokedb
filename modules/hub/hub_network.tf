@@ -1,4 +1,4 @@
-resource "azurerm_resource_group" "hub_rg" {
+resource "azurerm_resource_group" "hub" {
   for_each = toset(local.regions)
 
   location = each.value
@@ -13,8 +13,8 @@ module "hubnetworks" {
     eastus = {
       address_space                   = [local.address_space[local.primary_region].address_space]
       name                            = module.naming[local.primary_region].firewall.name
-      location                        = azurerm_resource_group.hub_rg[local.primary_region].location
-      resource_group_name             = azurerm_resource_group.hub_rg[local.primary_region].name
+      location                        = azurerm_resource_group.hub[local.primary_region].location
+      resource_group_name             = azurerm_resource_group.hub[local.primary_region].name
       resource_group_creation_enabled = false
       resource_group_lock_enabled     = false
       mesh_peering_enabled            = true
@@ -43,8 +43,8 @@ module "hubnetworks" {
     eastus2 = {
       address_space                   = [local.address_space[local.secondary_region].address_space]
       name                            = module.naming[local.secondary_region].firewall.name
-      location                        = azurerm_resource_group.hub_rg[local.secondary_region].location
-      resource_group_name             = azurerm_resource_group.hub_rg[local.secondary_region].name
+      location                        = azurerm_resource_group.hub[local.secondary_region].location
+      resource_group_name             = azurerm_resource_group.hub[local.secondary_region].name
       resource_group_creation_enabled = false
       resource_group_lock_enabled     = false
       mesh_peering_enabled            = true
