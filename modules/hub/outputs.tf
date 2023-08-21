@@ -23,7 +23,7 @@ output "base_firewall_policy_id" {
 }
 
 output "public_ip_prefixes" {
-  value = azurerm_public_ip_prefix.this
+  value = azurerm_public_ip_prefix.hub
 }
 
 output "private_dns_zones" {
