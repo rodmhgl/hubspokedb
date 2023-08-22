@@ -13,5 +13,6 @@ resource "azurerm_public_ip_prefix" "hub" {
   location            = azurerm_resource_group.public_ips[each.value].location
   resource_group_name = azurerm_resource_group.public_ips[each.value].name
   prefix_length       = 31
+  zones               = [] # TODO: Add availability zones
   tags                = local.tags
 }

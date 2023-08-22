@@ -22,4 +22,11 @@ locals {
     environment = var.environment
     module      = path.root
   }
+  # tags = merge(local.module_tags, var.tags)
+  dns_virtual_networks_ids = [
+    for r in local.regions : ({
+      id                   = module.hubnetworks.virtual_networks[r].id,
+      registration_enabled = false
+    })
+  ]
 }
