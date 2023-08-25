@@ -29,6 +29,9 @@ jobs:
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
   invoke_hub_bastion_host_deploy:
+    strategy:
+      matrix:
+        environment: [nprd, sim]
     uses: ./.github/workflows/reusable.yml
     needs: invoke_hub_deploy
     with:
