@@ -14,12 +14,15 @@ jobs:
     name: Deploy nprd hub
     runs-on: ubuntu-latest
     environment: nprd
+    env:
+      ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
+      ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
+      ARM_CLIENT_ID: "${{ vars.ARM_CLIENT_ID }}"
+      ARM_SUBSCRIPTION_ID: "${{ vars.ARM_SUBSCRIPTION_ID }}"
 
     steps:
     - name: Terraform Init
       env:
-        ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
-        ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
         STORAGE_ACCOUNT_NAME: ${{ vars.TERRAFORMBACKENDSTORAGEACCOUNT }}
         CONTAINER_NAME: ${{ vars.TERRAFORMBACKENDSTORAGECONTAINER }}
         RESOURCE_GROUP_NAME: ${{ vars.TERRAFORMBACKENDRESOURCEGROUP }}
