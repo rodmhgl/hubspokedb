@@ -123,7 +123,7 @@ jobs:
     - name: Create String Output
       id: tf-plan-string
       run: |
-        TERRAFORM_PLAN=$(terraform show -no-color ${WORKING_DIR}/tfplan)
+        TERRAFORM_PLAN=$(terraform -chdir=$WORKING_DIR show -no-color ${WORKING_DIR}/tfplan)
 
         delimiter="$(openssl rand -hex 8)"
         echo "summary<<${delimiter}" >> $GITHUB_OUTPUT
