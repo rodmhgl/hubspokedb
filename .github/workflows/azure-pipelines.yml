@@ -1,0 +1,31 @@
+pr: none
+
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - /modules/stack/hub
+
+variables:
+  - group: terraform-secrets
+
+stages:
+  - template: terraform-stages-template.yml
+    parameters:
+      environment: nprd
+      environmentDisplayName: Non-Production
+      TerraformArguments: '-var environment=nprd'
+      # For additional security, pass secrets through environment instead of command line.
+      # Terraform recognizes TF_VAR prefixed environment variables.
+      # TerraformEnvVariables:
+      #   TF_VAR_sql2password: $(SQL_PASSWORD)
+
+  - template: terraform-stages-template.yml
+    parameters:
+      environment: sim
+      environmentDisplayName: Simulator
+      TerraformArguments: '-var department=sim'
+      # TerraformEnvVariables:
+      #   TF_VAR_sql2password: $(SQL_PASSWORD)
