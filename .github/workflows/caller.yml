@@ -14,10 +14,13 @@ on:
     - main
 
 jobs:
-  invoke_nprd_hub_deploy:
+  invoke_hub_deploy:
+    strategy:
+      matrix:
+        environment: [nprd, sim]
     uses: ./.github/workflows/reusable.yml
     with:
-      environment: nprd
+      environment: ${{ matrix.environment }}
       tenant: db
       stack: hub
       key: hub_landing_zone
@@ -25,11 +28,11 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
-  invoke_nprd_hub_bastion_host_deploy:
+  invoke_hub_bastion_host_deploy:
     uses: ./.github/workflows/reusable.yml
-    needs: invoke_nprd_hub_deploy
+    needs: invoke_hub_deploy
     with:
-      environment: nprd
+      environment: ${{ matrix.environment }}
       tenant: db
       stack: bastion
       key: hub_bastion
@@ -37,37 +40,37 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
-  invoke_sim_hub_deploy:
-    uses: ./.github/workflows/reusable.yml
-    with:
-      environment: sim
-      tenant: db
-      stack: hub
-      key: hub_landing_zone
-    secrets:
-      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+  # invoke_sim_hub_deploy:
+  #   uses: ./.github/workflows/reusable.yml
+  #   with:
+  #     environment: sim
+  #     tenant: db
+  #     stack: hub
+  #     key: hub_landing_zone
+  #   secrets:
+  #     ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+  #     ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
-  invoke_sim_hub_bastion_host_deploy:
-    uses: ./.github/workflows/reusable.yml
-    needs: invoke_sim_hub_deploy
-    with:
-      environment: sim
-      tenant: db
-      stack: bastion
-      key: hub_bastion
-    secrets:
-      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+  # invoke_sim_hub_bastion_host_deploy:
+  #   uses: ./.github/workflows/reusable.yml
+  #   needs: invoke_sim_hub_deploy
+  #   with:
+  #     environment: sim
+  #     tenant: db
+  #     stack: bastion
+  #     key: hub_bastion
+  #   secrets:
+  #     ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+  #     ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
-  invoke_sim_hub_resource_group_deploy:
-    uses: ./.github/workflows/reusable.yml
-    needs: invoke_sim_hub_bastion_host_deploy
-    with:
-      environment: sim
-      tenant: db
-      stack: next
-      key: hub_resource_group_temp
-    secrets:
-      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+  # invoke_sim_hub_resource_group_deploy:
+  #   uses: ./.github/workflows/reusable.yml
+  #   needs: invoke_sim_hub_bastion_host_deploy
+  #   with:
+  #     environment: sim
+  #     tenant: db
+  #     stack: next
+  #     key: hub_resource_group_temp
+  #   secrets:
+  #     ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+  #     ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
