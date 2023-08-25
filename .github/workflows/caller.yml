@@ -12,7 +12,7 @@ on:
 jobs:
   # call-workflow-1-in-local-repo:
     # uses: octo-org/this-repo/.github/workflows/workflow-1.yml@172239021f7ba04fe7327647b213799853a9eb89
-  call-workflow-2-in-local-repo:
+  deploy_hub:
     uses: ./.github/workflows/reusable.yml
     # with:
       # command: echo "hi!"
