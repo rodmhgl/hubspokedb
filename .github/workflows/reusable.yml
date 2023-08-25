@@ -210,4 +210,5 @@ jobs:
 
     # Terraform Apply
     - name: Terraform Apply
-      run: terraform -chdir=$WORKING_DIR apply -auto-approve tfplan
+      run: |
+        terraform -chdir=$WORKING_DIR apply -auto-approve tfplan
