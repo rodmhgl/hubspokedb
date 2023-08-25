@@ -85,9 +85,9 @@ jobs:
           -backend-config="key=db/${ENVIRONMENT}/hub_landing_zone.tfstate" \
           -backend-config="resource_group_name=${BACKEND_RESOURCE_GROUP_NAME}" \
           -backend-config="subscription_id=${BACKEND_SUBSCRIPTION_ID}" \
-          -backend-config="tenant_id=${ARM_TENANT_ID}" \
-          -backend-config="client_id=${ARM_CLIENT_ID}" \
-          -backend-config="client_secret=${ARM_CLIENT_SECRET}"\
+          # -backend-config="tenant_id=${ARM_TENANT_ID}" \
+          # -backend-config="client_id=${ARM_CLIENT_ID}" \
+          # -backend-config="client_secret=${ARM_CLIENT_SECRET}"
 
     # Checks that all Terraform configuration files adhere to a canonical format
     # Will fail the build if not
