@@ -10,11 +10,28 @@ on:
     - main
 
 jobs:
-  # call-workflow-1-in-local-repo:
-    # uses: octo-org/this-repo/.github/workflows/workflow-1.yml@172239021f7ba04fe7327647b213799853a9eb89
-  deploy_hub:
-    uses: ./.github/workflows/reusable.yml
-    # with:
-      # command: echo "hi!"
-  # call-workflow-in-another-repo:
-    # uses: octo-org/another-repo/.github/workflows/workflow.yml@v1
+  init_hub:
+    name: Deploy nprd hub
+    runs-on: ubuntu-latest
+    environment: nprd
+
+    steps:
+    - name: Terraform Init
+      env:
+        ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
+        ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
+        STORAGE_ACCOUNT_NAME: ${{ vars.TERRAFORMBACKENDSTORAGEACCOUNT }}
+        CONTAINER_NAME: ${{ vars.TERRAFORMBACKENDSTORAGECONTAINER }}
+        RESOURCE_GROUP_NAME: ${{ vars.TERRAFORMBACKENDRESOURCEGROUP }}
+        SUBSCRIPTION_ID: ${{ vars.TERRAFORMBACKENDSUBSCRIPTIONID }}
+        ENVIRONMENT: ${{ vars.ENVIRONMENT }}
+      run: export -p ; az login --service-principal --username $ARM_CLIENT_ID --password $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID #terraform -chdir="modules/stack/hub/" init -backend-config=storage_account_name=$STORAGE_ACCOUNT_NAME -backend-config=container_name=$CONTAINER_NAME -backend-config=key=db/${ENVIRONMENT}/hub_landing_zone.tfstate -backend-config=resource_group_name=$RESOURCE_GROUP_NAME -backend-config=subscription_id=$SUBSCRIPTION_ID -backend-config=tenant_id=$tenantId -backend-config=client_id=$servicePrincipalId -backend-config=client_secret="$servicePrincipalKey"
+
+  # plan_hub:
+  #   uses: ./.github/workflows/reusable.yml
+  #   with:
+  #     environment: nprd
+  #     tenant: db
+  #   secrets:
+  #     ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
+  #     ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"

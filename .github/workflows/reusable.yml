@@ -2,6 +2,25 @@ name: 'Terraform Plan/Apply'
 
 on:
   workflow_call:
+    inputs:
+      environment:
+        default: nprd
+        type: string
+        description: Environment to Deploy to
+        required: true
+      tenant:
+        default: db
+        type: string
+        description: Tenant to Deploy for
+        required: true
+    secrets:
+      ARM_CLIENT_SECRET:
+        required: true
+        description: Service Principal Secret for Authentication
+      ARM_TENANT_ID:
+        required: true
+        description: Service Principal Tenant for Authentication
+
   # push:
   #   branches:
   #   - main
