@@ -123,7 +123,6 @@ jobs:
     - name: Create String Output
       id: tf-plan-string
       run: |
-        ls $WORKING_DIR
         TERRAFORM_PLAN=$(terraform show -no-color ${WORKING_DIR}/tfplan)
 
         delimiter="$(openssl rand -hex 8)"
