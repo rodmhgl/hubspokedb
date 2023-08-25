@@ -51,7 +51,7 @@ jobs:
         RESOURCE_GROUP_NAME: ${{ vars.TERRAFORMBACKENDRESOURCEGROUP }}
         SUBSCRIPTION_ID: ${{ vars.TERRAFORMBACKENDSUBSCRIPTIONID }}
         ENVIRONMENT: ${{ vars.ENVIRONMENT }}
-      run: |
+      run: >
         terraform init \
           -chdir="modules/stack/hub/" \
           -backend-config=storage_account_name=$STORAGE_ACCOUNT_NAME \
