@@ -59,3 +59,15 @@ jobs:
     secrets:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
+  invoke_sim_hub_resource_group_deploy:
+    uses: ./.github/workflows/reusable.yml
+    needs: invoke_sim_hub_deploy
+    with:
+      environment: sim
+      tenant: db
+      stack: next
+      key: hub_resource_group_temp
+    secrets:
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
