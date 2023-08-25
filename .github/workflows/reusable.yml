@@ -78,7 +78,7 @@ jobs:
         BACKEND_SUBSCRIPTION_ID: ${{ vars.TERRAFORMBACKENDSUBSCRIPTIONID }}
         ENVIRONMENT: ${{ vars.ENVIRONMENT }}
         # export -p && az login --service-principal --username $ARM_CLIENT_ID --password $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID &&
-      run: TF_LOG=1 terraform -chdir="modules/stack/hub/" init -backend-config="storage_account_name=${BACKEND_STORAGE_ACCOUNT_NAME}" -backend-config="container_name=${BACKEND_CONTAINER_NAME}" -backend-config="key=db/${ENVIRONMENT}/hub_landing_zone.tfstate" -backend-config="resource_group_name=${BACKEND_RESOURCE_GROUP_NAME}" -backend-config="subscription_id=${BACKEND_SUBSCRIPTION_ID}" -backend-config="tenant_id=${ARM_TENANT_ID}" -backend-config="client_id=${servicePrincipalId}" -backend-config="client_secret=${ARM_TENANT_SECRET}"
+      run: TF_LOG=1 terraform -chdir="modules/stack/hub/" init -backend-config="storage_account_name=${BACKEND_STORAGE_ACCOUNT_NAME}" -backend-config="container_name=${BACKEND_CONTAINER_NAME}" -backend-config="key=db/${ENVIRONMENT}/hub_landing_zone.tfstate" -backend-config="resource_group_name=${BACKEND_RESOURCE_GROUP_NAME}" -backend-config="subscription_id=${BACKEND_SUBSCRIPTION_ID}" -backend-config="tenant_id=${ARM_TENANT_ID}" -backend-config="client_id=${ARM_CLIENT_ID}" -backend-config="client_secret=${ARM_TENANT_SECRET}"
 
     # Checks that all Terraform configuration files adhere to a canonical format
     # Will fail the build if not
