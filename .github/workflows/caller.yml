@@ -32,8 +32,8 @@ jobs:
       environment: nprd
       tenant: db
     secrets:
-      ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
-      ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
     # - name: Terraform Init
     #   env:
     #     STORAGE_ACCOUNT_NAME: ${{ vars.TERRAFORMBACKENDSTORAGEACCOUNT }}
