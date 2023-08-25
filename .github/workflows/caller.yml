@@ -13,7 +13,7 @@ jobs:
   invoke_hub_deploy:
     strategy:
       matrix:
-        environment: [nprd, sim]
+        environment: [nprd] #, sim]
         stack: [hub]
     uses: ./.github/workflows/reusable.yml
     with:
