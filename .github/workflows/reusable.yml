@@ -14,4 +14,4 @@ jobs:
   triage:
     runs-on: ubuntu-latest
     steps:
-    - run: bash ${{ inputs.config-path }}
+    - run: bash ${{ inputs.command }}
