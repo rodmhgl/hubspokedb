@@ -1,1 +1,0 @@
-terraform init -input=false -backend-config="key=db/nprd/hub_landing_zone.tfstate" -reconfigure

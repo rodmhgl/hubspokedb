@@ -1,1 +1,0 @@
-terraform init -input=false -backend-config="key=db/sim/hub_bastion.tfstate" -reconfigure
