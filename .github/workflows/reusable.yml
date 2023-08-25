@@ -101,7 +101,7 @@ jobs:
       id: tf-plan
       run: |
         export exitcode=0
-        terraform -chdir=$WORKING_DIR plan -var="environment=${ENVIRONMENT}" -detailed-exitcode -no-color -out "tfplan || export exitcode=$?
+        terraform -chdir=$WORKING_DIR plan -var="environment=${ENVIRONMENT}" -detailed-exitcode -no-color -out tfplan || export exitcode=$?
 
         echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
 
