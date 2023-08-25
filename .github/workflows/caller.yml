@@ -14,24 +14,45 @@ on:
     - main
 
 jobs:
-  invoke_hub_deploy:
-    strategy:
-      matrix:
-        environment: [nprd, sim]
-        stack: [hub]
+  invoke_nprd_hub_deploy:
     uses: ./.github/workflows/reusable.yml
     with:
-      environment: ${{ matrix.environment }}
+      environment: nprd
       tenant: db
-      stack: ${{ matrix.stack }}
+      stack: hub
     secrets:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-    # - name: Terraform Init
-    #   env:
-    #     STORAGE_ACCOUNT_NAME: ${{ vars.TERRAFORMBACKENDSTORAGEACCOUNT }}
-    #     CONTAINER_NAME: ${{ vars.TERRAFORMBACKENDSTORAGECONTAINER }}
-    #     RESOURCE_GROUP_NAME: ${{ vars.TERRAFORMBACKENDRESOURCEGROUP }}
-    #     SUBSCRIPTION_ID: ${{ vars.TERRAFORMBACKENDSUBSCRIPTIONID }}
-    #     ENVIRONMENT: ${{ vars.ENVIRONMENT }}
-    #   run: export -p ; az login --service-principal --username $ARM_CLIENT_ID --password $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID #terraform -chdir="modules/stack/hub/" init -backend-config=storage_account_name=$STORAGE_ACCOUNT_NAME -backend-config=container_name=$CONTAINER_NAME -backend-config=key=db/${ENVIRONMENT}/hub_landing_zone.tfstate -backend-config=resource_group_name=$RESOURCE_GROUP_NAME -backend-config=subscription_id=$SUBSCRIPTION_ID -backend-config=tenant_id=$tenantId -backend-config=client_id=$servicePrincipalId -backend-config=client_secret="$servicePrincipalKey"
+
+  invoke_nprd_hub_bastion_host_deploy:
+    uses: ./.github/workflows/reusable.yml
+    needs: invoke_nprd_hub_deploy
+    with:
+      environment: nprd
+      tenant: db
+      stack: bastion
+    secrets:
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
+deploy_sim:
+  invoke_sim_hub_deploy:
+    uses: ./.github/workflows/reusable.yml
+    with:
+      environment: sim
+      tenant: db
+      stack: hub
+    secrets:
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
+  invoke_sim_hub_bastion_host_deploy:
+    uses: ./.github/workflows/reusable.yml
+    needs: invoke_sim_hub_deploy
+    with:
+      environment: sim
+      tenant: db
+      stack: bastion
+    secrets:
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
