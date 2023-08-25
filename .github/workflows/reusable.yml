@@ -51,17 +51,7 @@ jobs:
         RESOURCE_GROUP_NAME: ${{ vars.TERRAFORMBACKENDRESOURCEGROUP }}
         SUBSCRIPTION_ID: ${{ vars.TERRAFORMBACKENDSUBSCRIPTIONID }}
         ENVIRONMENT: ${{ vars.ENVIRONMENT }}
-      run: >
-        terraform init \
-          -chdir="modules/stack/hub/" \
-          -backend-config=storage_account_name=$STORAGE_ACCOUNT_NAME \
-          -backend-config=container_name=$CONTAINER_NAME \
-          -backend-config=key=db/${ENVIRONMENT}/hub_landing_zone.tfstate \
-          -backend-config=resource_group_name=$RESOURCE_GROUP_NAME \
-          -backend-config=subscription_id=$SUBSCRIPTION_ID \
-          -backend-config=tenant_id=$tenantId \
-          -backend-config=client_id=$servicePrincipalId \
-          -backend-config=client_secret="$servicePrincipalKey"
+      run: terraform init -chdir="modules/stack/hub/" -backend-config=storage_account_name=$STORAGE_ACCOUNT_NAME -backend-config=container_name=$CONTAINER_NAME -backend-config=key=db/${ENVIRONMENT}/hub_landing_zone.tfstate -backend-config=resource_group_name=$RESOURCE_GROUP_NAME -backend-config=subscription_id=$SUBSCRIPTION_ID -backend-config=tenant_id=$tenantId -backend-config=client_id=$servicePrincipalId -backend-config=client_secret="$servicePrincipalKey"
 
     # Checks that all Terraform configuration files adhere to a canonical format
     # Will fail the build if not
