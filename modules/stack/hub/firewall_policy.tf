@@ -30,7 +30,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "allow_internal" {
 
     rule {
       destination_ports     = ["*"]
-      name                  = "rfc1918_allow"
+      name                  = "rfc1918"
       protocols             = ["Any"]
       destination_addresses = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
       source_addresses      = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
