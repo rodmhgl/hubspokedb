@@ -16,7 +16,7 @@ on:
 #   pull-requests: write
 
 #These environment variables are used by the terraform azure provider to setup OIDC authentication.
-env:
+# env:
   # ARM_CLIENT_ID: "${{ vars.ARM_CLIENT_ID }}"
   # ARM_SUBSCRIPTION_ID: "${{ vars.ARM_SUBSCRIPTION_ID }}"
   # ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
