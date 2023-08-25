@@ -10,25 +10,14 @@ on:
     - main
 
 jobs:
-  # init_hub:
-  #   name: Deploy nprd hub
-  #   runs-on: ubuntu-latest
-  #   environment: nprd
-  #   outputs:
-  #     ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
-  #     ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
-  #     ARM_CLIENT_ID: "${{ vars.ARM_CLIENT_ID }}"
-  #     ARM_SUBSCRIPTION_ID: "${{ vars.ARM_SUBSCRIPTION_ID }}"
-  #   env:
-  #     ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
-  #     ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
-  #     ARM_CLIENT_ID: "${{ vars.ARM_CLIENT_ID }}"
-  #     ARM_SUBSCRIPTION_ID: "${{ vars.ARM_SUBSCRIPTION_ID }}"
-
-  invoke_plan:
+  invoke_hub_deploy:
+    strategy:
+      matrix:
+        environment: [nprd, sim]
+        stack: [hub]
     uses: ./.github/workflows/reusable.yml
     with:
-      environment: nprd
+      environment: ${{ matrix.environment }}
       tenant: db
     secrets:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}

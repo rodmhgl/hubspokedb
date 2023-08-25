@@ -13,6 +13,11 @@ on:
         type: string
         description: Tenant to Deploy for
         required: true
+      stack:
+        default: hub
+        type: string
+        description: The stack to deploy
+        required: true
     secrets:
       ARM_CLIENT_SECRET:
         required: true
@@ -53,6 +58,7 @@ jobs:
       ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
       #this is needed since we are running terraform with read-only permissions
       ARM_SKIP_PROVIDER_REGISTRATION: true
+      WORKING_DIR: "/modules/stack/${{ inputs.stack }}"
     # outputs:
     #   tfplanExitCode: ${{ steps.tf-plan.outputs.exitcode }}
 
@@ -70,8 +76,8 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       env:
-        ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
-        ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
+        # ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
+        # ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
         BACKEND_STORAGE_ACCOUNT_NAME: ${{ vars.TERRAFORMBACKENDSTORAGEACCOUNT }}
         BACKEND_CONTAINER_NAME: ${{ vars.TERRAFORMBACKENDSTORAGECONTAINER }}
         BACKEND_RESOURCE_GROUP_NAME: ${{ vars.TERRAFORMBACKENDRESOURCEGROUP }}
@@ -79,7 +85,7 @@ jobs:
         ENVIRONMENT: ${{ vars.ENVIRONMENT }}
         # export -p && az login --service-principal --username $ARM_CLIENT_ID --password $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID &&
       run: |
-        terraform -chdir="modules/stack/hub/" init \
+        terraform -chdir="${WORKING_DIR}" init \
           -backend-config="storage_account_name=${BACKEND_STORAGE_ACCOUNT_NAME}" \
           -backend-config="container_name=${BACKEND_CONTAINER_NAME}" \
           -backend-config="key=db/${ENVIRONMENT}/hub_landing_zone.tfstate" \
@@ -89,7 +95,7 @@ jobs:
     # Checks that all Terraform configuration files adhere to a canonical format
     # Will fail the build if not
     - name: Terraform Format
-      run: terraform -chdir="modules/stack/hub/" fmt -check
+      run: terraform -chdir="${WORKING_DIR}" fmt -check
 
     # Generates an execution plan for Terraform
     # An exit code of 0 indicated no changes, 1 a terraform failure, 2 there are pending changes.
@@ -97,7 +103,7 @@ jobs:
       id: tf-plan
       run: |
         export exitcode=0
-        terraform -chdir="modules/stack/hub/" plan -var="environment=${ENVIRONMENT}" -detailed-exitcode -no-color -out tfplan || export exitcode=$?
+        terraform -chdir="${WORKING_DIR}" plan -var="environment=${ENVIRONMENT}" -detailed-exitcode -no-color -out tfplan || export exitcode=$?
 
         echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
 
