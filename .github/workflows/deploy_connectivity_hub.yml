@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         environment: [nprd, sim]
-    uses: ./.github/workflows/reusable.yml
+    uses: ./.github/workflows/terraform_plan_apply.yml
     with:
       environment: ${{ matrix.environment }}
       tenant: db
@@ -32,7 +32,7 @@ jobs:
     strategy:
       matrix:
         environment: [nprd, sim]
-    uses: ./.github/workflows/reusable.yml
+    uses: ./.github/workflows/terraform_plan_apply.yml
     needs: invoke_hub_deploy
     with:
       environment: ${{ matrix.environment }}
@@ -44,7 +44,7 @@ jobs:
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
   # invoke_sim_hub_deploy:
-  #   uses: ./.github/workflows/reusable.yml
+  #   uses: ./.github/workflows/terraform_plan_apply.yml
   #   with:
   #     environment: sim
   #     tenant: db
@@ -55,7 +55,7 @@ jobs:
   #     ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
   # invoke_sim_hub_bastion_host_deploy:
-  #   uses: ./.github/workflows/reusable.yml
+  #   uses: ./.github/workflows/terraform_plan_apply.yml
   #   needs: invoke_sim_hub_deploy
   #   with:
   #     environment: sim
@@ -67,7 +67,7 @@ jobs:
   #     ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
   # invoke_sim_hub_resource_group_deploy:
-  #   uses: ./.github/workflows/reusable.yml
+  #   uses: ./.github/workflows/terraform_plan_apply.yml
   #   needs: invoke_sim_hub_bastion_host_deploy
   #   with:
   #     environment: sim
