@@ -166,6 +166,15 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     needs: [terraform-plan]
+    env:
+      ARM_CLIENT_ID: "${{ vars.ARM_CLIENT_ID }}"
+      ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
+      ARM_SUBSCRIPTION_ID: "${{ vars.ARM_SUBSCRIPTION_ID }}"
+      ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
+      #this is needed since we are running terraform with read-only permissions
+      ARM_SKIP_PROVIDER_REGISTRATION: true
+      WORKING_DIR: "modules/stack/${{ inputs.stack }}"
+      ENVIRONMENT: ${{ vars.ENVIRONMENT }}
 
     steps:
     # Checkout the repository to the GitHub Actions runner
