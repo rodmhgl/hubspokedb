@@ -101,7 +101,7 @@ jobs:
       id: tf-plan
       run: |
         export exitcode=0
-        terraform -chdir=$WORKING_DIR plan -var="environment=${ENVIRONMENT}" -detailed-exitcode -no-color -out tfplan || export exitcode=$?
+        terraform -chdir=$WORKING_DIR plan -var="environment=${ENVIRONMENT}" -detailed-exitcode -no-color -out "tfplan || export exitcode=$?
 
         echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
 
@@ -116,7 +116,7 @@ jobs:
     - name: Publish Terraform Plan
       uses: actions/upload-artifact@v3
       with:
-        name: tfplan
+        name: ${{env.ENVIRONMENT}}_tfplan
         path: ${{env.WORKING_DIR}}/tfplan
 
     # Create string output of Terraform Plan
@@ -205,7 +205,7 @@ jobs:
     - name: Download Terraform Plan
       uses: actions/download-artifact@v3
       with:
-        name: tfplan
+        name: ${{env.ENVIRONMENT}}_tfplan
         path: ${{env.WORKING_DIR}}
 
     # Terraform Apply

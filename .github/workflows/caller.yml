@@ -35,7 +35,6 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
-deploy_sim:
   invoke_sim_hub_deploy:
     uses: ./.github/workflows/reusable.yml
     with:
