@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: terraform
+    directory: /terraform
+    schedule:
+      interval: daily
+      time: '14:20'
+      timezone: America/Chicago
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
+      time: '14:20'
+      timezone: America/Chicago
