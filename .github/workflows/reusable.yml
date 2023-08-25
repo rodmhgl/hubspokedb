@@ -58,7 +58,7 @@ jobs:
       ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
       #this is needed since we are running terraform with read-only permissions
       ARM_SKIP_PROVIDER_REGISTRATION: true
-      WORKING_DIR: "/modules/stack/${{ inputs.stack }}"
+      WORKING_DIR: "modules/stack/${{ inputs.stack }}"
     # outputs:
     #   tfplanExitCode: ${{ steps.tf-plan.outputs.exitcode }}
 
