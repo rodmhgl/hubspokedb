@@ -20,6 +20,7 @@ jobs:
       environment: nprd
       tenant: db
       stack: hub
+      key: hub_landing_zone
     secrets:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
@@ -31,6 +32,7 @@ jobs:
       environment: nprd
       tenant: db
       stack: bastion
+      key: hub_bastion
     secrets:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
@@ -41,6 +43,7 @@ jobs:
       environment: sim
       tenant: db
       stack: hub
+      key: hub_landing_zone
     secrets:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
@@ -52,6 +55,7 @@ jobs:
       environment: sim
       tenant: db
       stack: bastion
+      key: hub_bastion
     secrets:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
