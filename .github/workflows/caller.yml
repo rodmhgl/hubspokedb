@@ -6,9 +6,9 @@ on:
     branches:
     - main
     paths:
-    - modules/stack/hub
-    - modules/stack/bastion
-    - .github/workflows
+    - /modules/stack/hub
+    - /modules/stack/bastion
+    - /.github/workflows
   pull_request:
     branches:
     - main
