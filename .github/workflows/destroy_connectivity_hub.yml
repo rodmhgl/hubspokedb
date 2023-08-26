@@ -15,6 +15,10 @@ jobs:
       tenant: db
       stack: bastion
       backend_key: hub_bastion
+      backend_resource_group: ${{ vars.BACKEND_RESOURCE_GROUP }}
+      backend_storage_account: ${{ vars.BACKEND_STORAGE_ACCOUNT }}
+      backend_storage_container: ${{ vars.BACKEND_STORAGE_CONTAINER }}
+      backend_subscription_id: ${{ vars.BACKEND_SUBSCRIPTION_ID }}
     secrets:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
@@ -31,6 +35,10 @@ jobs:
       tenant: db
       stack: hub
       backend_key: hub_landing_zone
+      backend_resource_group: ${{ vars.BACKEND_RESOURCE_GROUP }}
+      backend_storage_account: ${{ vars.BACKEND_STORAGE_ACCOUNT }}
+      backend_storage_container: ${{ vars.BACKEND_STORAGE_CONTAINER }}
+      backend_subscription_id: ${{ vars.BACKEND_SUBSCRIPTION_ID }}
     secrets:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
