@@ -215,4 +215,4 @@ jobs:
       # Terraform Destroy
       - name: Terraform Destroy
         run: |
-          terraform -chdir=$WORKING_DIR destroy -auto-approve tfplan
+          terraform -chdir=$WORKING_DIR apply -auto-approve tfplan
