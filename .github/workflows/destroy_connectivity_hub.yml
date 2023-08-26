@@ -1,0 +1,36 @@
+name: "Destroy Connectivity Hub"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  invoke_hub_destroy:
+    strategy:
+      matrix:
+        environment: [nprd, sim]
+    name: ${{ matrix.environment }} - Destroy Hub Network and Firewalls
+    uses: ./.github/workflows/terraform_plan_destroy.yml
+    with:
+      environment: ${{ matrix.environment }}
+      tenant: db
+      stack: hub
+      key: hub_landing_zone
+    secrets:
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
+  invoke_hub_bastion_host_destroy:
+    strategy:
+      matrix:
+        environment: [nprd, sim]
+    name: ${{ matrix.environment }} - Destroy Hub Bastion Host
+    uses: ./.github/workflows/terraform_plan_destroy.yml
+    needs: invoke_hub_destroy
+    with:
+      environment: ${{ matrix.environment }}
+      tenant: db
+      stack: bastion
+      key: hub_bastion
+    secrets:
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
