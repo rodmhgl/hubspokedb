@@ -38,6 +38,14 @@ on:
         type: string
         required: true
         description: Name of the State Key to Use (no extension)
+      arm_subscription_id:
+        type: string
+        required: true
+        description: ID of the Subscription to Deploy Into
+      arm_client_id:
+        type: string
+        required: true
+        description: ID of the Service Principal to Use for Deployment
     secrets:
       ARM_CLIENT_SECRET:
         required: true
@@ -54,8 +62,8 @@ on:
 
 #These environment variables are used by the terraform azure provider to setup OIDC authentication.
 # env:
-# ARM_CLIENT_ID: "${{ vars.ARM_CLIENT_ID }}"
-# ARM_SUBSCRIPTION_ID: "${{ vars.ARM_SUBSCRIPTION_ID }}"
+# ARM_CLIENT_ID: "${{ inputs.arm_client_id }}"
+# ARM_SUBSCRIPTION_ID: "${{ inputs.arm_subscription_id }}"
 # ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
 # ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
 
@@ -65,14 +73,14 @@ jobs:
     runs-on: ubuntu-latest
     # environment: ${{inputs.environment}}
     env:
-      ARM_CLIENT_ID: "${{ vars.ARM_CLIENT_ID }}"
+      ARM_CLIENT_ID: "${{ inputs.arm_client_id }}"
       ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
-      ARM_SUBSCRIPTION_ID: "${{ vars.ARM_SUBSCRIPTION_ID }}"
+      ARM_SUBSCRIPTION_ID: "${{ inputs.arm_subscription_id }}"
       ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
       #this is needed since we are running terraform with read-only permissions
       ARM_SKIP_PROVIDER_REGISTRATION: true
       WORKING_DIR: "modules/stack/${{ inputs.stack }}"
-      ENVIRONMENT: ${{ vars.ENVIRONMENT }}
+      ENVIRONMENT: ${{ inputs.ENVIRONMENT }}
     outputs:
       tfplanExitCode: ${{ steps.tf-plan.outputs.exitcode }}
 
@@ -90,10 +98,10 @@ jobs:
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
         env:
-          BACKEND_STORAGE_ACCOUNT_NAME: ${{ vars.BACKEND_STORAGE_ACCOUNT }}
-          BACKEND_CONTAINER_NAME: ${{ vars.BACKEND_STORAGE_CONTAINER }}
-          BACKEND_RESOURCE_GROUP_NAME: ${{ vars.BACKEND_RESOURCE_GROUP }}
-          BACKEND_SUBSCRIPTION_ID: ${{ vars.BACKEND_SUBSCRIPTION_ID }}
+          BACKEND_STORAGE_ACCOUNT_NAME: ${{ inputs.backend_storage_account }}
+          BACKEND_CONTAINER_NAME: ${{ inputs.backend_storage_container }}
+          BACKEND_RESOURCE_GROUP_NAME: ${{ inputs.backend_resource_group }}
+          BACKEND_SUBSCRIPTION_ID: ${{ inputs.backend_subscription_id }}
           # export -p && az login --service-principal --username $ARM_CLIENT_ID --password $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID &&
         run: |
           terraform -chdir=$WORKING_DIR init \
@@ -180,14 +188,14 @@ jobs:
     environment: ${{ inputs.environment }}
     needs: [terraform-plan]
     env:
-      ARM_CLIENT_ID: "${{ vars.ARM_CLIENT_ID }}"
+      ARM_CLIENT_ID: "${{ inputs.arm_client_id }}"
       ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
-      ARM_SUBSCRIPTION_ID: "${{ vars.ARM_SUBSCRIPTION_ID }}"
+      ARM_SUBSCRIPTION_ID: "${{ inputs.arm_subscription_id }}"
       ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
       #this is needed since we are running terraform with read-only permissions
       ARM_SKIP_PROVIDER_REGISTRATION: true
       WORKING_DIR: "modules/stack/${{ inputs.stack }}"
-      ENVIRONMENT: ${{ vars.ENVIRONMENT }}
+      ENVIRONMENT: ${{ inputs.ENVIRONMENT }}
 
     steps:
       # Checkout the repository to the GitHub Actions runner
@@ -201,10 +209,10 @@ jobs:
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
         env:
-          BACKEND_STORAGE_ACCOUNT_NAME: ${{ vars.BACKEND_STORAGE_ACCOUNT }}
-          BACKEND_CONTAINER_NAME: ${{ vars.BACKEND_STORAGE_CONTAINER }}
-          BACKEND_RESOURCE_GROUP_NAME: ${{ vars.BACKEND_RESOURCE_GROUP }}
-          BACKEND_SUBSCRIPTION_ID: ${{ vars.BACKEND_SUBSCRIPTION_ID }}
+          BACKEND_STORAGE_ACCOUNT_NAME: ${{ inputs.backend_storage_account }}
+          BACKEND_CONTAINER_NAME: ${{ inputs.backend_storage_container }}
+          BACKEND_RESOURCE_GROUP_NAME: ${{ inputs.backend_resource_group }}
+          BACKEND_SUBSCRIPTION_ID: ${{ inputs.backend_subscription_id }}
           # export -p && az login --service-principal --username $ARM_CLIENT_ID --password $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID &&
         run: |
           terraform -chdir=$WORKING_DIR init \
