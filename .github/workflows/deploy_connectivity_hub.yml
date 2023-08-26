@@ -9,6 +9,7 @@ on:
       - "modules/stack/hub/**"
       - "modules/stack/bastion/**"
       - ".github/workflows/**"
+      - "!.github/workflows/destroy*"
   pull_request:
     branches:
       - main
@@ -21,7 +22,7 @@ jobs:
   invoke_hub_deploy:
     strategy:
       matrix:
-        environment: [nprd, sim]
+        environment: [nprd, sim, prd]
     name: Deploy Hub Network and Firewalls
     uses: ./.github/workflows/terraform_plan_apply.yml
     with:
@@ -36,7 +37,7 @@ jobs:
   invoke_hub_bastion_host_deploy:
     strategy:
       matrix:
-        environment: [nprd, sim]
+        environment: [nprd, sim, prd]
     name: Deploy Hub Bastion Host
     uses: ./.github/workflows/terraform_plan_apply.yml
     needs: invoke_hub_deploy
