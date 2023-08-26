@@ -7,7 +7,7 @@ jobs:
   invoke_hub_bastion_host_destroy:
     strategy:
       matrix:
-        environment: [nprd, sim]
+        environment: [sim]
     name: ${{ matrix.environment }} - Destroy Hub Bastion Host
     uses: ./.github/workflows/terraform_plan_destroy.yml
     with:
@@ -28,7 +28,7 @@ jobs:
   invoke_hub_destroy:
     strategy:
       matrix:
-        environment: [nprd, sim]
+        environment: [sim]
     name: ${{ matrix.environment }} - Destroy Hub Network and Firewalls
     uses: ./.github/workflows/terraform_plan_destroy.yml
     needs: invoke_hub_bastion_host_destroy
