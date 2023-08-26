@@ -25,7 +25,7 @@ jobs:
   invoke_hub_deploy:
     strategy:
       matrix:
-        environment: [nprd, sim, prd]
+        environment: [nprd, sim]
     name: Deploy Hub Network and Firewalls
     uses: ./.github/workflows/terraform_plan_apply.yml
     with:
@@ -40,7 +40,7 @@ jobs:
   invoke_hub_bastion_host_deploy:
     strategy:
       matrix:
-        environment: [nprd, sim, prd]
+        environment: [nprd, sim]
     name: Deploy Hub Bastion Host
     uses: ./.github/workflows/terraform_plan_apply.yml
     needs: invoke_hub_deploy
