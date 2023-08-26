@@ -7,20 +7,14 @@ jobs:
   invoke_hub_bastion_host_destroy:
     strategy:
       matrix:
-        environment: [sim]
+        environment: [nprd, sim]
     name: ${{ matrix.environment }} - Destroy Hub Bastion Host
     uses: ./.github/workflows/terraform_plan_destroy.yml
     with:
       environment: ${{ matrix.environment }}
       tenant: db
       stack: bastion
-      backend_key: hub_bastion
-      backend_resource_group: ${{ vars.BACKEND_RESOURCE_GROUP }}
-      backend_storage_account: ${{ vars.BACKEND_STORAGE_ACCOUNT }}
-      backend_storage_container: ${{ vars.BACKEND_STORAGE_CONTAINER }}
-      backend_subscription_id: ${{ vars.BACKEND_SUBSCRIPTION_ID }}
-      arm_client_id: ${{ vars.ARM_CLIENT_ID }}
-      arm_subscription_id: ${{ vars.ARM_SUBSCRIPTION_ID }}
+      key: hub_bastion
     secrets:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
@@ -28,7 +22,7 @@ jobs:
   invoke_hub_destroy:
     strategy:
       matrix:
-        environment: [sim]
+        environment: [nprd, sim]
     name: ${{ matrix.environment }} - Destroy Hub Network and Firewalls
     uses: ./.github/workflows/terraform_plan_destroy.yml
     needs: invoke_hub_bastion_host_destroy
@@ -36,13 +30,7 @@ jobs:
       environment: ${{ matrix.environment }}
       tenant: db
       stack: hub
-      backend_key: hub_landing_zone
-      backend_resource_group: ${{ vars.BACKEND_RESOURCE_GROUP }}
-      backend_storage_account: ${{ vars.BACKEND_STORAGE_ACCOUNT }}
-      backend_storage_container: ${{ vars.BACKEND_STORAGE_CONTAINER }}
-      backend_subscription_id: ${{ vars.BACKEND_SUBSCRIPTION_ID }}
-      arm_client_id: ${{ vars.ARM_CLIENT_ID }}
-      arm_subscription_id: ${{ vars.ARM_SUBSCRIPTION_ID }}
+      key: hub_landing_zone
     secrets:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
