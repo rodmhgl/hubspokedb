@@ -81,10 +81,10 @@ jobs:
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
         env:
-          BACKEND_STORAGE_ACCOUNT_NAME: ${{ vars.TERRAFORMBACKENDSTORAGEACCOUNT }}
-          BACKEND_CONTAINER_NAME: ${{ vars.TERRAFORMBACKENDSTORAGECONTAINER }}
-          BACKEND_RESOURCE_GROUP_NAME: ${{ vars.TERRAFORMBACKENDRESOURCEGROUP }}
-          BACKEND_SUBSCRIPTION_ID: ${{ vars.TERRAFORMBACKENDSUBSCRIPTIONID }}
+          BACKEND_STORAGE_ACCOUNT_NAME: ${{ vars.BACKEND_STORAGE_ACCOUNT }}
+          BACKEND_CONTAINER_NAME: ${{ vars.BACKEND_STORAGE_CONTAINER }}
+          BACKEND_RESOURCE_GROUP_NAME: ${{ vars.BACKEND_RESOURCE_GROUP }}
+          BACKEND_SUBSCRIPTION_ID: ${{ vars.BACKEND_SUBSCRIPTION_ID }}
           # export -p && az login --service-principal --username $ARM_CLIENT_ID --password $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID &&
         run: |
           terraform -chdir=$WORKING_DIR init \
@@ -192,10 +192,10 @@ jobs:
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
         env:
-          BACKEND_STORAGE_ACCOUNT_NAME: ${{ vars.TERRAFORMBACKENDSTORAGEACCOUNT }}
-          BACKEND_CONTAINER_NAME: ${{ vars.TERRAFORMBACKENDSTORAGECONTAINER }}
-          BACKEND_RESOURCE_GROUP_NAME: ${{ vars.TERRAFORMBACKENDRESOURCEGROUP }}
-          BACKEND_SUBSCRIPTION_ID: ${{ vars.TERRAFORMBACKENDSUBSCRIPTIONID }}
+          BACKEND_STORAGE_ACCOUNT_NAME: ${{ vars.BACKEND_STORAGE_ACCOUNT }}
+          BACKEND_CONTAINER_NAME: ${{ vars.BACKEND_STORAGE_CONTAINER }}
+          BACKEND_RESOURCE_GROUP_NAME: ${{ vars.BACKEND_RESOURCE_GROUP }}
+          BACKEND_SUBSCRIPTION_ID: ${{ vars.BACKEND_SUBSCRIPTION_ID }}
           # export -p && az login --service-principal --username $ARM_CLIENT_ID --password $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID &&
         run: |
           terraform -chdir=$WORKING_DIR init \

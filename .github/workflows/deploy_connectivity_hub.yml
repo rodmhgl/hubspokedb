@@ -9,7 +9,8 @@ on:
       - "modules/stack/hub/**"
       - "modules/stack/bastion/**"
       - ".github/workflows/**"
-      - "!.github/workflows/destroy*"
+      - "!.github/workflows/destroy_connectivity_hub.yml"
+      - "!.github/workflows/terraform_plan_destroy.yml"
   pull_request:
     branches:
       - main
