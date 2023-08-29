@@ -16,6 +16,12 @@ variable "tags" {
   default     = {}
 }
 
+variable "regions" {
+  type        = list(string)
+  description = "List of regions to deploy into."
+  default     = ["eastus", "eastus2"]
+}
+
 # variable "regions" {
 #   type        = list(string)
 #   description = "The list of regions where the landing zone resources will be deployed."
