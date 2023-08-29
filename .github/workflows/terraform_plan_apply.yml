@@ -131,7 +131,7 @@ jobs:
 
           delimiter="$(openssl rand -hex 8)"
           echo "summary<<${delimiter}" >> $GITHUB_OUTPUT
-          echo "## Terraform Plan Output" >> $GITHUB_OUTPUT
+          echo "## Terraform Plan Output - $ENVIRONMENT" >> $GITHUB_OUTPUT
           echo "<details><summary>Click to expand</summary>" >> $GITHUB_OUTPUT
           echo "" >> $GITHUB_OUTPUT
           echo '```terraform' >> $GITHUB_OUTPUT
