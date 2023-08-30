@@ -1,8 +1,9 @@
 locals {
-  regions          = ["eastus", "eastus2"]
+  regions          = var.regions
   primary_region   = local.regions[0]
   secondary_region = local.regions[1]
-  address_spaces = {
+
+  address_spaces = { # environments is validated to ensure a valid space here
     eastus = {
       sim  = "10.1.0.0/16"
       nprd = "10.1.0.0/16"
@@ -14,15 +15,20 @@ locals {
       prd  = "10.2.0.0/16"
     }
   }
+
   address_space = {
-    eastus  = { address_space = local.address_spaces.eastus[var.environment] }
-    eastus2 = { address_space = local.address_spaces.eastus2[var.environment] }
+    for region, spaces in local.address_spaces : region => {
+      address_space = spaces[var.environment]
+    }
   }
-  tags = {
+
+  module_tags = {
     environment = var.environment
-    module      = path.root
+    stack       = "hub"
   }
-  # tags = merge(local.module_tags, var.tags)
+
+  tags = merge(local.module_tags, var.tags)
+
   dns_virtual_networks_ids = [
     for r in local.regions : ({
       id                   = module.hubnetworks.virtual_networks[r].id,
