@@ -6,14 +6,6 @@ module "naming" {
   prefix  = [lower(var.prefix), lower(var.environment), "hub", each.value]
 }
 
-module "naming_public_ips" {
-  for_each = toset(local.regions)
-
-  source  = "Azure/naming/azurerm"
-  version = "0.3.0"
-  prefix  = [lower(var.prefix), lower(var.environment), "pips", each.value]
-}
-
 module "subnet_addressing" {
   source  = "hashicorp/subnets/cidr"
   version = "1.0.0"

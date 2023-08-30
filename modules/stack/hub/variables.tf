@@ -14,3 +14,14 @@ variable "prefix" {
   description = "The prefix to use for all resources in this deployment."
   default     = "dbdemo"
 }
+variable "tags" {
+  type        = map(string)
+  description = "The tags to associate with your network security groups."
+  default     = {}
+}
+
+variable "regions" {
+  type        = list(string)
+  description = "The list of regions where the landing zone resources will be deployed."
+  default     = ["eastus", "eastus2", ]
+}

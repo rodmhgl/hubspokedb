@@ -18,28 +18,6 @@ variable "tags" {
 
 variable "regions" {
   type        = list(string)
-  description = "List of regions to deploy into."
-  default     = ["eastus", "eastus2"]
+  description = "The list of regions where the landing zone resources will be deployed."
+  default     = ["eastus", "eastus2", ]
 }
-
-# variable "regions" {
-#   type        = list(string)
-#   description = "The list of regions where the landing zone resources will be deployed."
-#   default     = ["eastus", "eastus2", ]
-# }
-
-# variable "virtual_networks" {
-#   type = map(object({
-#     name                = string
-#     resource_group_name = string
-#     address_prefix      = string
-#   }))
-#   description = "The virtual networks where the landing zone resources will be deployed."
-# }
-
-# variable "public_ip_prefixes" {
-#   type = map(object({
-#     id = string
-#   }))
-#   description = "The ID of the public ip prefix to use."
-# }

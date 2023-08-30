@@ -1,3 +1,11 @@
+module "naming_public_ips" {
+  for_each = toset(local.regions)
+
+  source  = "Azure/naming/azurerm"
+  version = "0.3.0"
+  prefix  = [lower(var.prefix), lower(var.environment), "pips", each.value]
+}
+
 resource "azurerm_resource_group" "public_ips" {
   for_each = toset(local.regions)
 

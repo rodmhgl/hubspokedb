@@ -3,7 +3,7 @@ locals {
 
   mandatory_tags = {
     environment = var.environment
-    module      = path.root
+    stack       = "bastion"
   }
 
   tags = merge(var.tags, local.mandatory_tags)
