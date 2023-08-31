@@ -33,7 +33,7 @@ repos:
     # - id: terrascan
     - id: tfupdate
       args:
-      - --args=terraform --version '>= 1.4.6'
+      - --args=terraform --version '>= 1.5.6'
     - id: tfupdate
       args:
       - --args=provider --version '>= 3.71.0' azurerm

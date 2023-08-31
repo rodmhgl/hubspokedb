@@ -15,3 +15,9 @@ variable "tags" {
   description = "The tags to associate with your network security groups."
   default     = {}
 }
+
+variable "regions" {
+  type        = list(string)
+  description = "The list of regions where the landing zone resources will be deployed."
+  default     = ["eastus", "eastus2", ]
+}
