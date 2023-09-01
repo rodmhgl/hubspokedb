@@ -23,19 +23,8 @@ resource "azurerm_resource_group" "this" {
 }
 
 module "frontdoor_profile" {
-  source              = "../../service/FrontDoorProfile"
+  source              = "github.com/rodmhgl/FrontDoorProfile?ref=v1.0.0"
   name                = module.naming.frontdoor.name
   resource_group_name = azurerm_resource_group.this.name
   tags                = local.tags
-}
-
-resource "azurerm_cdn_frontdoor_profile" "this" {
-  name                = module.naming.frontdoor.name
-  resource_group_name = azurerm_resource_group.this.name
-  sku_name            = "Standard_AzureFrontDoor"
-  # Maximum response timeout in seconds.
-  # Possible values 16-240 (inclusive).
-  # Defaults to 120.
-  response_timeout_seconds = 120
-  tags                     = local.tags
 }

@@ -37,8 +37,7 @@ variable "private_dns_zones" {
 }
 
 module "private_dns_zones" {
-  source = "../../service/PrivateDNSZone"
-  # version = ""
+  source   = "github.com/rodmhgl/PrivateDNSZone?ref=v1.0.0"
   for_each = var.private_dns_zones
 
   name                = each.key
