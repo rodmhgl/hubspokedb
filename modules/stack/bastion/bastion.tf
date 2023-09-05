@@ -22,8 +22,9 @@ data "azurerm_subnet" "bastion" {
 }
 
 module "bastion_host" {
-  source = "../../service/BastionHost"
-  # version = ""
+  # source   = "github.com/rodmhgl/BastionHost?ref=v2.0.0"
+  source   = "rodmhgl/bastionhost/azurerm"
+  version  = "2.2.0"
   for_each = local.regions
 
   name                = module.naming[each.value].bastion_host.name

@@ -1,6 +1,21 @@
+locals {
+  dns_virtual_networks_ids = [
+    for r in local.regions : ({
+      id                   = module.hubnetworks.virtual_networks[r].id,
+      registration_enabled = false
+    })
+  ]
+}
+
+module "naming_private_dns" {
+  source  = "Azure/naming/azurerm"
+  version = "0.3.0"
+  prefix  = [lower(var.prefix), lower(var.environment), "private", "dns", local.regions[0]]
+}
+
 resource "azurerm_resource_group" "private_dns" {
   location = local.regions[0]
-  name     = module.naming["eastus"].private_dns_zone.name
+  name     = module.naming_private_dns.resource_group.name
   tags     = local.tags
 }
 
@@ -31,8 +46,7 @@ variable "private_dns_zones" {
 }
 
 module "private_dns_zones" {
-  source = "../../service/PrivateDNSZone"
-  # version = ""
+  source   = "github.com/rodmhgl/PrivateDNSZone?ref=v1.0.0"
   for_each = var.private_dns_zones
 
   name                = each.key
