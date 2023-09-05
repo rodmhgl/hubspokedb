@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "fwpolicy" {
   location = local.regions[0]
-  name     = module.naming["eastus"].firewall_policy.name
+  name     = module.naming[local.regions[0]].firewall_policy.name
   tags     = local.tags
 }
 

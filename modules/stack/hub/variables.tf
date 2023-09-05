@@ -25,3 +25,8 @@ variable "regions" {
   description = "The list of regions where the landing zone resources will be deployed."
   default     = ["eastus", "eastus2", ]
 }
+
+variable "address_spaces" {
+  type        = list(string)
+  description = "The address spaces to use for each region."
+}
