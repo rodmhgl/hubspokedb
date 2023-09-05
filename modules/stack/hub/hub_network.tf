@@ -1,6 +1,14 @@
 locals {
   address_spaces = zipmap(var.regions, var.address_spaces)
 
+  # tflint-ignore: terraform_unused_declarations
+  firewall_tags = merge(local.tags, {
+    "role" = "hub_firewall"
+  })
+  network_tags = merge(local.tags, {
+    "role" = "hub_virtual_network"
+  })
+
   hub_virtual_networks = {
     for r in var.regions : r => {
       address_space                   = [local.address_spaces[r]]
@@ -11,7 +19,7 @@ locals {
       resource_group_lock_enabled     = false
       mesh_peering_enabled            = true
       routing_address_space           = [local.address_spaces[r]]
-      tags                            = local.tags
+      tags                            = local.network_tags
       hub_router_ip_address           = "1.2.3.4"
       subnets = {
         # The module will currently fail attempting to attach a route table to AzureBastionSubnet
@@ -29,7 +37,7 @@ locals {
       #   threat_intel_mode     = "Off"
       #   subnet_address_prefix = module.subnet_addressing[r].network_cidr_blocks["AzureFirewallSubnet"]
       #   firewall_policy_id    = azurerm_firewall_policy.fwpolicy.id
-      #   tags                  = local.tags
+      #   tags                  = local.firewall_tags
       # }
     }
   }
