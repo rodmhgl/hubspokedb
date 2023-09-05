@@ -62,7 +62,8 @@ jobs:
       ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
       #this is needed since we are running terraform with read-only permissions
       ARM_SKIP_PROVIDER_REGISTRATION: true
-      WORKING_DIR: "modules/stack/${{ inputs.stack }}"
+      # WORKING_DIR: "modules/stack/${{ inputs.stack }}"
+      WORKING_DIR: "envs/${{inputs.environment}}/${{ inputs.stack }}"
       ENVIRONMENT: ${{ vars.ENVIRONMENT }}
     outputs:
       tfplanExitCode: ${{ steps.tf-plan.outputs.exitcode }}
@@ -151,7 +152,7 @@ jobs:
 
       # If this is a PR post the changes
       - name: Push Terraform Output to PR
-        if: github.ref != 'refs/heads/main'
+        if: github.ref != 'refs/heads/main' && github.event_name == 'pull_request'
         uses: actions/github-script@v6
         env:
           SUMMARY: "${{ steps.tf-plan-string.outputs.summary }}"
@@ -179,7 +180,8 @@ jobs:
       ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
       #this is needed since we are running terraform with read-only permissions
       ARM_SKIP_PROVIDER_REGISTRATION: true
-      WORKING_DIR: "modules/stack/${{ inputs.stack }}"
+      # WORKING_DIR: "modules/stack/${{ inputs.stack }}"
+      WORKING_DIR: "envs/${{inputs.environment}}/${{ inputs.stack }}"
       ENVIRONMENT: ${{ vars.ENVIRONMENT }}
 
     steps:

@@ -1,9 +1,9 @@
 terraform {
-  required_version = ">= 1.4.6"
+  required_version = ">= 1.5.6"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">=3.67.0"
+      version = ">= 3.71.0"
     }
   }
 
@@ -25,6 +25,11 @@ variable "environment" {
   description = "The environment you are deploying to."
 }
 
+variable "address_spaces" {
+  type        = list(string)
+  description = "The address spaces to use for each region."
+}
+
 variable "regions" {
   type        = list(string)
   description = "A list of the region(s) you are deploying to."
@@ -39,8 +44,9 @@ variable "tags" {
 module "hub" {
   source = "../../../modules/stack/hub"
   # version = ""
-  prefix      = var.prefix
-  environment = var.environment
-  regions     = var.regions
-  tags        = var.tags
+  prefix         = var.prefix
+  environment    = var.environment
+  regions        = var.regions
+  address_spaces = var.address_spaces
+  tags           = var.tags
 }
