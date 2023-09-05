@@ -1,3 +1,12 @@
+locals {
+  dns_virtual_networks_ids = [
+    for r in local.regions : ({
+      id                   = module.hubnetworks.virtual_networks[r].id,
+      registration_enabled = false
+    })
+  ]
+}
+
 module "naming_private_dns" {
   source  = "Azure/naming/azurerm"
   version = "0.3.0"
