@@ -39,19 +39,20 @@ jobs:
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       TFC_TOKEN: ${{ secrets.TFC_TOKEN }}
 
-  # invoke_hub_bastion_host_deploy:
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       environment: [nprd, sim]
-  #   name: Deploy ${{ matrix.environment }} Hub Bastion Host
-  #   uses: ./.github/workflows/terraform_plan_apply.yml
-  #   needs: invoke_hub_deploy
-  #   with:
-  #     environment: ${{ matrix.environment }}
-  #     tenant: db
-  #     stack: bastion
-  #     key: hub_bastion
-  #   secrets:
-  #     ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-  #     ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+  invoke_hub_bastion_host_deploy:
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: [nprd, sim]
+    name: Deploy ${{ matrix.environment }} Hub Bastion Host
+    uses: ./.github/workflows/terraform_plan_apply.yml
+    needs: invoke_hub_deploy
+    with:
+      environment: ${{ matrix.environment }}
+      tenant: db
+      stack: bastion
+      key: hub_bastion
+    secrets:
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      TFC_TOKEN: ${{ secrets.TFC_TOKEN }}
