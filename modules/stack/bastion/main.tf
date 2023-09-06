@@ -24,3 +24,7 @@ resource "azurerm_resource_group" "this" {
   name     = module.naming[each.value].resource_group.name
   tags     = local.tags
 }
+
+credentials "app.terraform.io" {
+  token = var.TFC_TOKEN
+}
