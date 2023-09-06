@@ -65,6 +65,7 @@ jobs:
       # WORKING_DIR: "modules/stack/${{ inputs.stack }}"
       WORKING_DIR: "envs/${{inputs.environment}}/${{ inputs.stack }}"
       ENVIRONMENT: ${{ vars.ENVIRONMENT }}
+      TF_VAR_TFC_TOKEN: ${{ secrets.TFC_TOKEN }}
     outputs:
       tfplanExitCode: ${{ steps.tf-plan.outputs.exitcode }}
 
