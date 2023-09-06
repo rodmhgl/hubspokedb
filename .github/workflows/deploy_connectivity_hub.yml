@@ -38,26 +38,12 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
-  # invoke_hub_deploy_sim:
-  #   # strategy:
-  #     # matrix:
-  #       # environment: [nprd, sim]
-  #   name: Deploy Hub Network and Firewalls
-  #   uses: ./.github/workflows/terraform_plan_apply.yml
-  #   with:
-  #     environment: sim
-  #     tenant: db
-  #     stack: hub
-  #     key: hub_landing_zone
-  #   secrets:
-  #     ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-  #     ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-
   # invoke_hub_bastion_host_deploy:
   #   strategy:
+  #     fail-fast: false
   #     matrix:
   #       environment: [nprd, sim]
-  #   name: Deploy Hub Bastion Host
+  #   name: Deploy ${{ matrix.environment }} Hub Bastion Host
   #   uses: ./.github/workflows/terraform_plan_apply.yml
   #   needs: invoke_hub_deploy
   #   with:
