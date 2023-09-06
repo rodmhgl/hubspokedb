@@ -23,7 +23,7 @@ resource "azurerm_resource_group" "this" {
 }
 
 module "frontdoor_profile" {
-  source              = "github.com/rodmhgl/FrontDoorProfile?ref=v1.0.0"
+  source              = "github.com/rodmhgl/terraform-azurerm-frontdoorprofile?ref=v1.0.0"
   name                = module.naming.frontdoor.name
   resource_group_name = azurerm_resource_group.this.name
   tags                = local.tags

@@ -20,7 +20,7 @@ resource "azurerm_resource_group" "this" {
 }
 
 module "AzureMonitor" {
-  source                       = "github.com/rodmhgl/AzureMonitor?ref=v2.0.1"
+  source                       = "github.com/rodmhgl/terraform-azurerm-azuremonitor?ref=v2.0.1"
   log_analytics_workspace_name = module.naming.log_analytics_workspace.name
   location                     = var.region
   resource_group_name          = azurerm_resource_group.this.name
