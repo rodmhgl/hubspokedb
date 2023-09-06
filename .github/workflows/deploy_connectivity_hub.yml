@@ -22,14 +22,15 @@ on:
       - "!.github/workflows/terraform_plan_destroy.yml"
 
 jobs:
-  invoke_hub_deploy_nprd:
-    # strategy:
-      # matrix:
-        # environment: [nprd, sim]
-    name: Deploy Hub Network and Firewalls
+  invoke_hub_deploy:
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: [nprd, sim]
+    name: Deploy ${{ matrix.environment }} Hub Network and Firewalls
     uses: ./.github/workflows/terraform_plan_apply.yml
     with:
-      environment: nprd
+      environment: ${{ matrix.environment }}}
       tenant: db
       stack: hub
       key: hub_landing_zone
