@@ -29,6 +29,9 @@ on:
       ARM_TENANT_ID:
         required: true
         description: Service Principal Tenant for Authentication
+      TFC_TOKEN:
+        required: true
+        description: Terraform Cloud API Token
 
   # push:
   #   branches:
