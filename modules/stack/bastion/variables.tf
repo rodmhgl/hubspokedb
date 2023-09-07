@@ -22,7 +22,7 @@ variable "regions" {
   default     = ["eastus", "eastus2", ]
 }
 
-variable "TFC_TOKEN" {
-  type        = string
-  description = "Terraform Cloud token for accessing private registry"
-}
+#variable "TFC_TOKEN" {
+  #type        = string
+  #description = "Terraform Cloud token for accessing private registry"
+#}
