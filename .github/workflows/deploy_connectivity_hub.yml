@@ -27,7 +27,7 @@ jobs:
       fail-fast: false
       matrix:
         environment: [nprd, sim]
-    name: Deploy ${{ matrix.environment }} Hub Network and Firewalls
+    name: ${{ matrix.environment }} Network and Firewall
     uses: ./.github/workflows/terraform_plan_apply.yml
     with:
       environment: ${{ matrix.environment }}
@@ -44,7 +44,7 @@ jobs:
       fail-fast: false
       matrix:
         environment: [nprd, sim]
-    name: Deploy ${{ matrix.environment }} Hub Bastion Host
+    name: ${{ matrix.environment }} Bastion Host
     uses: ./.github/workflows/terraform_plan_apply.yml
     needs: invoke_hub_deploy
     with:
@@ -62,7 +62,7 @@ jobs:
       fail-fast: false
       matrix:
         environment: [nprd, sim]
-    name: Deploy ${{ matrix.environment }} Hub Azure Monitor
+    name: ${{ matrix.environment }} Azure Monitor
     uses: ./.github/workflows/terraform_plan_apply.yml
     with:
       environment: ${{ matrix.environment }}
