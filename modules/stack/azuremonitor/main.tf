@@ -1,6 +1,7 @@
 locals {
   mandatory_tags = {
     environment = var.environment
+    role        = "diagnostics"
     stack       = "azuremonitor"
   }
 
