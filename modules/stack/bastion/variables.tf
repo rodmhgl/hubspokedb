@@ -23,6 +23,6 @@ variable "regions" {
 }
 
 #variable "TFC_TOKEN" {
-  #type        = string
-  #description = "Terraform Cloud token for accessing private registry"
+#type        = string
+#description = "Terraform Cloud token for accessing private registry"
 #}
