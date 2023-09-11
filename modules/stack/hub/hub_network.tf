@@ -26,9 +26,11 @@ locals {
         # The module will currently fail attempting to attach a route table to AzureBastionSubnet
         AzureBastionSubnet = {
           address_prefixes             = [module.subnet_addressing[r].network_cidr_blocks["AzureBastionSubnet"]]
+          address_prefixes             = [module.subnet_addressing[r].network_cidr_blocks["AzureBastionSubnet"]]
           assign_generated_route_table = false
         }
         ServiceNowVMs = {
+          address_prefixes = [module.subnet_addressing[r].network_cidr_blocks["ServiceNowVM"]]
           address_prefixes = [module.subnet_addressing[r].network_cidr_blocks["ServiceNowVM"]]
         }
       }
