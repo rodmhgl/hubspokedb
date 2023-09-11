@@ -102,7 +102,7 @@ resource "azurerm_key_vault_access_policy" "tfacctpolicy" {
 
 module "akv_diag" {
   count                      = var.azure_monitor != null ? 1 : 0
-  source                     = "../AzureMonitorOnboarding/"
+  source                     = "github.com/rodmhgl/terraform-azurerm-azuremonitoronboarding?ref=v1.0.0"
   resource_name              = azurerm_key_vault.akv.name
   resource_id                = azurerm_key_vault.akv.id
   log_analytics_workspace_id = var.azure_monitor.law_out.id

@@ -1,5 +1,5 @@
 prefix      = "dbdemo"
-environment = "nprd"
+environment = "sim"
 regions      = ["eastus", "eastus2"]
 tags        = {
   "owner" = "av"

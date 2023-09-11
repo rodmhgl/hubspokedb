@@ -22,7 +22,7 @@ data "azurerm_subnet" "bastion" {
 }
 
 module "bastion_host" {
-  # source   = "github.com/rodmhgl/BastionHost?ref=v2.0.0"
+  # source   = "github.com/rodmhgl/terraform-azurerm-bastionhost?ref=v2.2.0"
   source   = "rodmhgl/bastionhost/azurerm"
   version  = "2.2.0"
   for_each = local.regions

@@ -1,3 +1,9 @@
+locals {
+  public_ip_prefix_tags = merge(local.tags, {
+    "role" = "hub_bastion_public_ip_prefix"
+  })
+}
+
 module "naming_public_ips" {
   for_each = toset(local.regions)
 
@@ -14,7 +20,7 @@ resource "azurerm_resource_group" "public_ips" {
   tags     = local.tags
 }
 
-resource "azurerm_public_ip_prefix" "hub" {
+resource "azurerm_public_ip_prefix" "bastion" {
   for_each = toset(local.regions)
 
   name                = module.naming_public_ips[each.value].public_ip_prefix.name
@@ -22,5 +28,5 @@ resource "azurerm_public_ip_prefix" "hub" {
   resource_group_name = azurerm_resource_group.public_ips[each.value].name
   prefix_length       = 31
   zones               = [] # TODO: Add availability zones
-  tags                = local.tags
+  tags                = local.public_ip_prefix_tags
 }
