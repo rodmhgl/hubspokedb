@@ -41,6 +41,42 @@ variable "tags" {
   default     = {}
 }
 
+output "hub_regions" {
+  value = module.hub.hub_regions
+}
+
+output "hub_firewalls" {
+  value = module.hub.hub_firewalls
+}
+
+output "hub_networks" {
+  value = module.hub.hub_networks
+}
+
+output "hub_route_tables" {
+  value = module.hub.hub_route_tables
+}
+
+output "hub_subnet_addressing" {
+  value = module.hub.hub_subnet_addressing
+}
+
+output "hub_base_firewall_policy_id" {
+  value = module.hub.hub_base_firewall_policy_id
+}
+
+output "hub_public_ip_prefixes" {
+  value = module.hub.hub_public_ip_prefixes
+}
+
+output "hub_private_dns_zones" {
+  value = module.hub.hub_private_dns_zones
+}
+
+output "diagnostics_stack" {
+  value = module.hub.diag_helper.diagnostics_stack
+}
+
 module "hub" {
   source = "../../../modules/stack/hub"
   # version = ""

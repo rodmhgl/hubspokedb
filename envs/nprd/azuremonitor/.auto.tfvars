@@ -1,6 +1,6 @@
 prefix      = "dbdemo"
 environment = "nprd"
-region      = "eastus"
+regions      = ["eastus", "eastus2"]
 tags        = {
   "owner" = "av"
   "source" = "terraform"

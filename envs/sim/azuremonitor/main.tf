@@ -25,8 +25,8 @@ variable "environment" {
   description = "The environment you are deploying to."
 }
 
-variable "region" {
-  type        = string
+variable "regions" {
+  type        = list(string)
   description = "The region you are deploying to."
 }
 
@@ -39,6 +39,6 @@ module "AzureMonitor" {
   source      = "../../../modules/stack/azuremonitor"
   prefix      = var.prefix
   environment = var.environment
-  region      = var.region
+  regions     = var.regions
   tags        = var.tags
 }

@@ -1,9 +1,5 @@
 locals {
-  address_spaces                      = zipmap(var.regions, var.address_spaces)
-  monitoring_workspace_name           = "${var.prefix}-${var.environment}-azmonitor-${var.regions[0]}-log"
-  monitoring_event_hub_namespace_name = "${var.prefix}-${var.environment}-azmonitor-${var.regions[0]}-ehn"
-  # monitoring_event_hub_name           = "${var.prefix}-${var.environment}-azmonitor-${var.regions[0]}-evh"
-  monitoring_resource_group_name = "${var.prefix}-${var.environment}-azmonitor-${var.regions[0]}-rg"
+  address_spaces = zipmap(var.regions, var.address_spaces)
 
   # tflint-ignore: terraform_unused_declarations
   firewall_tags = merge(local.tags, {
@@ -87,51 +83,51 @@ module "hubnetworks" {
   depends_on           = [azurerm_firewall_policy_rule_collection_group.allow_internal]
 }
 
-data "azurerm_log_analytics_workspace" "monitoring" {
-  name                = local.monitoring_workspace_name
-  resource_group_name = local.monitoring_resource_group_name
-}
-
-# data "azurerm_eventhub" "monitoring" {
-#   name                = local.monitoring_event_hub_name
-#   resource_group_name = local.monitoring_resource_group_name
-#   namespace_name      = local.monitoring_event_hub_namespace_name
-# }
-
-data "azurerm_resources" "monitoring" {
-  type                = "Microsoft.Storage/storageAccounts"
-  resource_group_name = local.monitoring_resource_group_name
-  required_tags = {
-    "role" = "diagnostics"
-  }
-}
-
-data "azurerm_storage_account" "monitoring" {
-  name                = data.azurerm_resources.monitoring.resources[0].name
-  resource_group_name = local.monitoring_resource_group_name
-}
-
-# data "azurerm_monitor_diagnostic_categories" "firewalls" {
-#   for_each    = module.hubnetworks.firewalls
-#   resource_id = each.value.id
-# }
-
 locals {
   diagnostics_map = {
-    diags_sa = data.azurerm_storage_account.monitoring.id
-    eh_id    = data.azurerm_eventhub_namespace.monitoring.id
-    eh_name  = data.azurerm_eventhub_namespace.monitoring.name
+    for r in var.regions : r => {
+      diags_sa = module.diag_helper.diagnostics_stack[r].storage_account_id // data.azurerm_storage_account.monitoring[r].id
+      eh_id    = module.diag_helper.diagnostics_stack[r].event_hub_namespace_id
+      eh_name  = module.diag_helper.diagnostics_stack[r].event_hub_namespace_name
+      law_id   = module.diag_helper.diagnostics_stack[r].log_analytics_workspace_id
+    }
   }
 }
 
-data "azurerm_eventhub_namespace" "monitoring" {
-  name                = local.monitoring_event_hub_namespace_name
-  resource_group_name = local.monitoring_resource_group_name
+module "diag_helper" {
+  source      = "./diag_helper"
+  regions     = var.regions
+  prefix      = var.prefix
+  environment = var.environment
+}
+
+output "diag_helper" {
+  value = module.diag_helper
 }
 
 data "azurerm_monitor_diagnostic_categories" "virtual_networks" {
   for_each    = module.hubnetworks.virtual_networks
   resource_id = each.value.id
+}
+
+data "azurerm_monitor_diagnostic_categories" "firewalls" {
+  for_each    = module.hubnetworks.firewalls
+  resource_id = each.value.id
+}
+
+module "firewall_diagnostics" {
+  for_each = module.hubnetworks.firewalls
+
+  source        = "github.com/rodmhgl/terraform-azurerm-azuremonitoronboarding?ref=v1.0.1"
+  resource_name = each.value.name
+  resource_id   = each.value.id
+  diagnostics_logs_map = {
+    log    = [for log in data.azurerm_monitor_diagnostic_categories.firewalls[each.key].log_category_types : [log, true, 30]],
+    metric = [for metric in data.azurerm_monitor_diagnostic_categories.firewalls[each.key].metrics : [metric, true, 30]],
+  }
+  diagnostics_map                   = local.diagnostics_map[each.key]
+  log_analytics_workspace_dedicated = "Dedicated"
+  log_analytics_workspace_id        = local.diagnostics_map[each.key].law_id
 }
 
 module "virtual_network_diagnostics" {
@@ -144,7 +140,7 @@ module "virtual_network_diagnostics" {
     log    = [for log in data.azurerm_monitor_diagnostic_categories.virtual_networks[each.key].log_category_types : [log, true, 30]],
     metric = [for metric in data.azurerm_monitor_diagnostic_categories.virtual_networks[each.key].metrics : [metric, true, 30]],
   }
-  diagnostics_map                   = local.diagnostics_map
+  diagnostics_map                   = local.diagnostics_map[each.value.location]
   log_analytics_workspace_dedicated = "Dedicated"
-  log_analytics_workspace_id        = data.azurerm_log_analytics_workspace.monitoring.id
+  log_analytics_workspace_id        = local.diagnostics_map[each.value.location].law_id
 }
