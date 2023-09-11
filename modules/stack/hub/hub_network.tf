@@ -26,11 +26,9 @@ locals {
         # The module will currently fail attempting to attach a route table to AzureBastionSubnet
         AzureBastionSubnet = {
           address_prefixes             = [module.subnet_addressing[r].network_cidr_blocks["AzureBastionSubnet"]]
-          address_prefixes             = [module.subnet_addressing[r].network_cidr_blocks["AzureBastionSubnet"]]
           assign_generated_route_table = false
         }
         ServiceNowVMs = {
-          address_prefixes = [module.subnet_addressing[r].network_cidr_blocks["ServiceNowVM"]]
           address_prefixes = [module.subnet_addressing[r].network_cidr_blocks["ServiceNowVM"]]
         }
       }
@@ -38,6 +36,7 @@ locals {
       #   sku_name              = "AZFW_VNet"
       #   sku_tier              = "Standard"
       #   threat_intel_mode     = "Off"
+      #   subnet_address_prefix = module.subnet_addressing[r].network_cidr_blocks["AzureFirewallSubnet"]
       #   subnet_address_prefix = module.subnet_addressing[r].network_cidr_blocks["AzureFirewallSubnet"]
       #   firewall_policy_id    = azurerm_firewall_policy.fwpolicy.id
       #   tags                  = local.firewall_tags
