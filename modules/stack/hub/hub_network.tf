@@ -32,15 +32,15 @@ locals {
           address_prefixes = [module.subnet_addressing[r].network_cidr_blocks["ServiceNowVM"]]
         }
       }
-      firewall = {
-        sku_name              = "AZFW_VNet"
-        sku_tier              = "Standard"
-        threat_intel_mode     = "Off"
-        subnet_address_prefix = module.subnet_addressing[r].network_cidr_blocks["AzureFirewallSubnet"]
-        subnet_address_prefix = module.subnet_addressing[r].network_cidr_blocks["AzureFirewallSubnet"]
-        firewall_policy_id    = azurerm_firewall_policy.fwpolicy.id
-        tags                  = local.firewall_tags
-      }
+      # firewall = {
+      #   sku_name              = "AZFW_VNet"
+      #   sku_tier              = "Standard"
+      #   threat_intel_mode     = "Off"
+      #   subnet_address_prefix = module.subnet_addressing[r].network_cidr_blocks["AzureFirewallSubnet"]
+      #   subnet_address_prefix = module.subnet_addressing[r].network_cidr_blocks["AzureFirewallSubnet"]
+      #   firewall_policy_id    = azurerm_firewall_policy.fwpolicy.id
+      #   tags                  = local.firewall_tags
+      # }
     }
   }
 
