@@ -44,3 +44,8 @@ Simple demo of a non-monolithic / multi-region Terraform Azure hub deployment.
 `modules/service` - Contains the service modules. A service module is responsible for creating an infrastructure resource and may be shared across multiple stacks.
 
 Environments are composed of a collection of root modules which calls the stack module. Environments are also responsible for creating the Terraform backend configuration and the Terraform state resources. The stack modules are responsible for calling the service modules and passing in the appropriate variables.
+
+
+| :memo: NOTE              |
+|:---------------------------|
+| While currently present in this repo for ease of testing, service modules should be isolated into their own repositories for proper module versioning / testing. |
