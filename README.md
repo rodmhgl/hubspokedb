@@ -66,19 +66,23 @@ Environments are composed of a collection of root modules which calls the stack 
 
 
 ```md
+```hcl
 :-1:
 resource "azurerm_resource_group" "network_resource_group" {
     name     = var.network_resource_group_name
     location = var.location
 }
 ```
+```
 
-:+1:
 ```md
+:+1:
+```hcl
 resource "azurerm_resource_group" "network" {
     name     = var.network_resource_group_name
     location = var.location
 }
+```
 ```
 
 
