@@ -64,8 +64,9 @@ Environments are composed of a collection of root modules which calls the stack 
 3. Do not repeat resource type in resource name.
 
 
+
+```md
 :-1:
-```hcl
 resource "azurerm_resource_group" "network_resource_group" {
     name     = var.network_resource_group_name
     location = var.location
@@ -73,7 +74,7 @@ resource "azurerm_resource_group" "network_resource_group" {
 ```
 
 :+1:
-```hcl
+```md
 resource "azurerm_resource_group" "network" {
     name     = var.network_resource_group_name
     location = var.location
