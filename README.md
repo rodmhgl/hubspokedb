@@ -68,12 +68,11 @@ Environments are composed of a collection of root modules which calls the stack 
 <td></td><td></td>
 </tr>
 <tr>
-<td> :-1: </td>
+<td> :+1: </td>
 <td>
 
-:-1:
 ```hcl
-resource "azurerm_resource_group" "network_resource_group" {
+resource "azurerm_resource_group" "network" {
     name     = var.network_resource_group_name
     location = var.location
 }
@@ -87,9 +86,8 @@ resource "azurerm_resource_group" "network_resource_group" {
 <td> :-1: </td>
 <td>
 
-:+1:
 ```hcl
-resource "azurerm_resource_group" "network" {
+resource "azurerm_resource_group" "network_resource_group" {
     name     = var.network_resource_group_name
     location = var.location
 }
@@ -98,7 +96,6 @@ resource "azurerm_resource_group" "network" {
 </td>
 </tr>
 </table>
-
 
 4. Include argument count / for_each inside resource or data source block as the **first argument** at the top and separate by newline after it.
 5. Tags, if supported by a resource, should be included as the **last real argument**, following by `depends_on` and `lifecycle`, if necessary.
