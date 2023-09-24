@@ -67,7 +67,7 @@ Environments are composed of a collection of root modules which calls the stack 
 <tr>
 </tr>
 <tr>
-<td> :+1: </td>
+<td> 	:heavy_check_mark: </td>
 <td>
 
 ```hcl
@@ -81,7 +81,7 @@ resource "azurerm_resource_group" "network" {
 <tr>
 </tr>
 <tr>
-<td> :-1: </td>
+<td> :x: </td>
 <td>
 
 ```hcl
