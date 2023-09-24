@@ -65,7 +65,6 @@ Environments are composed of a collection of root modules which calls the stack 
 
 <table>
 <tr>
-<td></td><td></td>
 </tr>
 <tr>
 <td> :+1: </td>
@@ -80,7 +79,6 @@ resource "azurerm_resource_group" "network" {
 
 </td>
 <tr>
-<td></td><td></td>
 </tr>
 <tr>
 <td> :-1: </td>
