@@ -5,6 +5,7 @@
 Simple demo of a non-monolithic / multi-region Terraform Azure hub deployment.
 
 ## Folder Structure
+
 ```
 .
 ├── envs
@@ -35,39 +36,40 @@ Simple demo of a non-monolithic / multi-region Terraform Azure hub deployment.
 
 `envs` - Contains the environment-specific code. This is used to specify module versioning when calling the stack modules. It also contains the environment-specific variables in the form of a `base.tfvars` and `.auto.tfvars` files.
 
-
 | :memo: NOTE              |
 |:---------------------------|
 | While currently present in this repo for ease of testing, stacks should be isolated into their own repositories for proper module versioning / testing. |
-
 
 `modules/stack` - Contains the stack modules. A stack represents a collection of infrastructure that  Terraform synthesizes as a dedicated Terraform configuration. Stacks allow you to separate the state management for multiple environments within an application and allows for the use of different versions of modules for each environment.
 
 `modules/service` - Contains the service modules. A service module is responsible for creating an infrastructure resource and may be shared across multiple stacks.
 
-
 | :memo: NOTE              |
 |:---------------------------|
 | While currently present in this repo for ease of testing, service modules should be isolated into their own repositories for proper module versioning / testing. |
-
 
 Environments are composed of a collection of root modules which calls the stack module. Environments are also responsible for creating the Terraform backend configuration and the Terraform state resources. The stack modules are responsible for calling the service modules and passing in the appropriate variables.
 
 ## Style Guidelines
 
+Style guidelines based on:
+
+- [Terraform Style Conventions](https://www.terraform.io/docs/language/syntax/style.html)
+- [Terraform Best Practices](https://www.terraform-best-practices.com/)
+- [Google Cloud's Best Practices for Terraform](https://cloud.google.com/docs/terraform/best-practices-for-terraform)
+
 ### General Guidelines
 
-1. All code should be formated to use the [HashiCorp Terraform style guidelines](https://developer.hashicorp.com/terraform/language/syntax/style) by utilizing the command `terraform fmt` as part of a pre-commit hook.
+1. All code should be formated to use the [HashiCorp Terraform style guidelines](https://developer.hashicorp.com/terraform/language/syntax/style) by utilizing the command `terraform fmt` as part of a [pre-commit](https://github.com/antonbabenko/pre-commit-terraform) hook.
 2. Name all configuration objects using `underscores` to delimit words and not `dashes`.
     1. Resources, Data Sources, Variables, Outputs, etc.
     2. Does not apply to naming of cloud resources.
 3. Do not repeat resource type in resource name.
 
 <table>
+<tr></tr>
 <tr>
-</tr>
-<tr>
-<td> 	:heavy_check_mark: </td>
+<td>  :heavy_check_mark: </td>
 <td>
 
 ```hcl
@@ -78,8 +80,7 @@ resource "azurerm_resource_group" "network" {
 ```
 
 </td>
-<tr>
-</tr>
+<tr></tr>
 <tr>
 <td> :x: </td>
 <td>
