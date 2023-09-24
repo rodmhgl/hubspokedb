@@ -63,19 +63,30 @@ Environments are composed of a collection of root modules which calls the stack 
     2. Does not apply to naming of cloud resources.
 3. Do not repeat resource type in resource name.
 
+<table>
+<tr>
+<td></td><td></td>
+</tr>
+<tr>
+<td> :-1: </td>
+<td>
 
-
-```md
-```hcl
 :-1:
+```hcl
 resource "azurerm_resource_group" "network_resource_group" {
     name     = var.network_resource_group_name
     location = var.location
 }
 ```
-```
 
-```md
+</td>
+<tr>
+<td></td><td></td>
+</tr>
+<tr>
+<td> :-1: </td>
+<td>
+
 :+1:
 ```hcl
 resource "azurerm_resource_group" "network" {
@@ -83,7 +94,10 @@ resource "azurerm_resource_group" "network" {
     location = var.location
 }
 ```
-```
+
+</td>
+</tr>
+</table>
 
 
 4. Include argument count / for_each inside resource or data source block as the **first argument** at the top and separate by newline after it.
