@@ -99,4 +99,43 @@ resource "azurerm_resource_group" "network_resource_group" {
 4. Include argument count / for_each inside resource or data source block as the **first argument** at the top and separate by newline after it.
 5. Tags, if supported by a resource, should be included as the **last real argument**, following by `depends_on` and `lifecycle`, if necessary.
     1. If `depends_on` and `lifecycle` are used, they should be separated by a single empty line. If `depends_on` and `lifecycle` are not used, tags should be the last argument.
-6. When using conditions in an argument (`count` / `for_each`) prefer boolean values instead of using length or other expressions.
+6. When using conditions in an argument (`count` / `for_each`) **prefer** boolean values instead of using length or other expressions.
+
+<table>
+<tr></tr>
+<tr>
+<td>  Best </td>
+<td>
+
+```hcl
+resource "azurerm_resource_group" "network" {
+    count    = var.create_network_resource_group ? 1 : 0
+    name     = var.network_resource_group_name
+    location = var.location
+}
+```
+
+</td>
+<tr></tr>
+<tr>
+<td> Acceptable </td>
+<td>
+
+```hcl
+resource "azurerm_resource_group" "network" {
+    count    = length(var.create_network_resource_group) ? 1 : 0
+    name     = var.network_resource_group_name
+    location = var.location
+}
+```
+
+</td>
+</tr>
+</table>
+
+7. To simplify references to resources, resources should be named `this` if there is no more descriptive/general name available or if it is the only one of its type (for example, a single load balancer for an entire module).
+    1. It takes extra mental work to remember `azurerm_load_balancer.my_special_resource.id` versus `azurerm_load_balancer.this.id`.
+8. Always use singular nouns for names
+9.
+
+Resource name should be named this if there is no more descriptive and general name available, or if the resource module creates a single resource of this type (eg, in AWS VPC module there is a single resource of type aws_nat_gateway and multiple resources of typeaws_route_table, so aws_nat_gateway should be named this and aws_route_table should have more descriptive names - like private, public, database).
