@@ -63,20 +63,28 @@ module "subnet_addressing" {
   base_cidr_block = each.value
   networks = [
     {
-      name     = "ServiceNowVM"
+      name     = "integration"
       new_bits = 8
     },
     {
-      name     = "integration"
+      name     = "integration2"
+      new_bits = 8
+    },
+    {
+      name     = "integration3"
+      new_bits = 8
+    },
+    {
+      name     = "ehsplunk"
+      new_bits = 8
+    },
+    {
+      name     = "ServiceNowVM"
       new_bits = 8
     },
     {
       name     = "GatewaySubnet"
       new_bits = 7
-    },
-    {
-      name     = "pvtendpoint"
-      new_bits = 1
     },
     {
       name     = "AzureFirewallSubnet"
@@ -85,6 +93,14 @@ module "subnet_addressing" {
     {
       name     = "AzureBastionSubnet"
       new_bits = 3
+    },
+    {
+      name     = "vmss"
+      new_bits = 3
+    },
+    {
+      name     = "pvtendpoint"
+      new_bits = 1
     },
   ]
 }
