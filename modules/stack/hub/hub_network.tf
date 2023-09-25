@@ -64,14 +64,26 @@ module "subnet_addressing" {
   networks = [
     {
       name     = "AzureFirewallSubnet"
-      new_bits = 10
+      new_bits = 3
     },
     {
       name     = "AzureBastionSubnet"
-      new_bits = 10
+      new_bits = 3
     },
     {
       name     = "ServiceNowVM"
+      new_bits = 8
+    },
+    {
+      name     = "GatewaySubnet"
+      new_bits = 7
+    },
+    {
+      name     = "pvtendpoint"
+      new_bits = 1
+    },
+    {
+      name     = "integration"
       new_bits = 8
     },
   ]
