@@ -162,3 +162,57 @@ resource "azurerm_resource_group" "network" {
     2. Adding a variable with a default value is backwards-compatible.
     3. Removing a variable is backwards-incompatible.
     4. In cases where a literal is re-used in multiple places, you can use a [local value](https://developer.hashicorp.com/terraform/language/values/locals) without exposing it as a variable.
+
+### Outputs
+
+Make outputs consistent and understandable outside of its scope (when a user is using a module it should be obvious the type and attribute of the value it returns).
+
+1. Organize all outputs in an outputs.tf file.
+2. Provide meaningful descriptions for all outputs.
+3. The name of output should describe the property it contains and be less free-form than you would normally want.
+    1. Good structure for the name of output looks like `{name}_{type}_{attribute}` , where:
+        1. `{name}` is a resource or data source name without a provider prefix.` {name}` for `azurerm_subnet` is `subnet`, for `azurerm_virtual_network` it is `virtual_network`.
+        2. `{type}` is a type of a resource sources
+        3. `{attribute}` is an attribute returned by the output
+4. If the returned value is a list, it should have a plural name.
+5. Document outputs  in the README.md file. Auto-generate descriptions on commit with tools like terraform-docs.
+6. Output all useful values that root modules might need to refer to or share.
+7. Prefer `try()` over `element(concat(...))`
+8. Don't pass outputs directly through input variables, because doing so prevents them from being properly added to the dependency graph. To ensure that implicit dependencies are created, make sure that outputs reference attributes from resources.
+
+<table>
+<tr></tr>
+<tr>
+<td> :+1: </td>
+<td>
+
+```hcl
+output "name" {
+    description = "Name of Resource Group"
+    value       = azurerm_resource_group.network.name
+}
+```
+
+</td>
+<tr></tr>
+<tr>
+<td> :-1: </td>
+<td>
+
+```hcl
+output "name" {
+    description = "Name of Resource Group"
+    value       = var.name
+}
+```
+
+</td>
+</tr>
+</table>
+
+### Data Sources
+
+1. Locate data sources near to the resources that reference them. For example, if you fetch an image to be used in launching an instance, place it alongside the instance instead of collecting data resources in their own file.
+2. However, if the number of data sources becomes large, consider moving them to a dedicated data.tf file.
+3. To fetch data relative to the current environment, use variable or resource interpolation.
+
