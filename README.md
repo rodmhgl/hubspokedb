@@ -98,7 +98,8 @@ resource "azurerm_resource_group" "network_resource_group" {
 
 4. Include argument count / for_each inside resource or data source block as the **first argument** at the top and separate by newline after it.
 5. Tags, if supported by a resource, should be included as the **last real argument**, following by `depends_on` and `lifecycle`, if necessary.
-    1. If `depends_on` and `lifecycle` are used, they should be separated by a single empty line. If `depends_on` and `lifecycle` are not used, tags should be the last argument.
+    1. If `depends_on` and `lifecycle` are used, they should be separated by a single empty line.
+    2. If `depends_on` and `lifecycle` are not used, tags should be the last argument.
 6. When using conditions in an argument (`count` / `for_each`) **prefer** boolean values instead of using length or other expressions.
 
 <table>
@@ -136,6 +137,28 @@ resource "azurerm_resource_group" "network" {
 7. To simplify references to resources, resources should be named `this` if there is no more descriptive/general name available or if it is the only one of its type (for example, a single load balancer for an entire module).
     1. It takes extra mental work to remember `azurerm_load_balancer.my_special_resource.id` versus `azurerm_load_balancer.this.id`.
 8. Always use singular nouns for names
-9.
 
-Resource name should be named this if there is no more descriptive and general name available, or if the resource module creates a single resource of this type (eg, in AWS VPC module there is a single resource of type aws_nat_gateway and multiple resources of typeaws_route_table, so aws_nat_gateway should be named this and aws_route_table should have more descriptive names - like private, public, database).
+### Variables
+
+1. For clarity, use `name`, `description`, and `default` value for variables as defined in the "Argument Reference" section for the resource you are working with.
+2. Validation support for variables is still quite limited (e.g. can't access other variables or do lookups). Plan accordingly because in many cases this feature is useless.
+3. Use the plural form in a variable name when type is `list(...)` or `map(...)`.
+4. Order keys in a variable block like this: `description` , `type`, `default`, `validation`.
+5. Always include description on all variables even if you think it is obvious (you will need it in the future).
+    1. Favor using the description from the resource documentation.
+6. Prefer using simple types (`number`, `string`, `list(...)`, `map(...)`, `any`) over specific type like `object()` unless you need to have strict constraints on each key.
+7. Use specific types like `map(map(string))` if all elements of the map have the same type (e.g. `string`) or can be converted to it (e.g. `number` type can be converted to `string`).
+10. Use `type = any` to disable type validation starting from a certain depth or when multiple types should be supported.
+9. Value `{}` is sometimes a map but sometimes an object. Use` tomap(...)` to make a map because there is currently no way to make an object.
+10. Variables should have relevant and descriptive names.
+    1. Inputs, local variables, and outputs representing numeric values—such as disk sizes or RAM size—must be named with units (such as `ram_size_gb`). Naming variables with units makes the expected input unit clear for configuration maintainers.
+    2. To simplify conditional logic, give boolean variables positive names—for example, `enable_external_access`.
+11. Variables should always provide default values where appropriate.
+    1. For variables that have environment-independent values (such as disk size), provide default values.
+    2. For variables that have environment-specific values (such as `project_id`), don't provide default values. This forces the calling module to provide meaningful values.
+    3. Use empty defaults for variables (like empty strings `""` or lists `[]`) only when leaving the variable empty is a valid preference that the underlying cloud API will not reject.
+12. Be judicious in your use of variables.
+    1. Only parameterize values with a concrete use-case that must vary for each instance or environment.
+    2. Adding a variable with a default value is backwards-compatible.
+    3. Removing a variable is backwards-incompatible.
+    4. In cases where a literal is re-used in multiple places, you can use a [local value](https://developer.hashicorp.com/terraform/language/values/locals) without exposing it as a variable.
