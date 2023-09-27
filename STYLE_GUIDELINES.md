@@ -44,7 +44,7 @@ resource "azurerm_resource_group" "network_resource_group" {
 </tr>
 </table>
 
-4. Include argument count / for_each inside resource or data source block as the **first argument** at the top and separate by newline after it.
+4. Include argument `count` / `for_each` inside resource or data source block as the **first argument** at the top and separate by newline after it.
 5. Tags, if supported by a resource, should be included as the **last real argument**, following by `depends_on` and `lifecycle`, if necessary.
     1. If `depends_on` and `lifecycle` are used, they should be separated by a single empty line.
     2. If `depends_on` and `lifecycle` are not used, tags should be the last argument.
