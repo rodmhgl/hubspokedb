@@ -22,6 +22,22 @@ on:
       - "!.github/workflows/terraform_plan_destroy.yml"
 
 jobs:
+  invoke_hub_azuremonitor_deploy:
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: [nprd, sim]
+    name: Deploy ${{ matrix.environment }} Hub Azure Monitor
+    uses: ./.github/workflows/terraform_plan_apply.yml
+    with:
+      environment: ${{ matrix.environment }}
+      tenant: db
+      stack: azuremonitor
+      key: hub_azure_monitor
+    secrets:
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
   invoke_hub_deploy:
     strategy:
       fail-fast: false
@@ -29,6 +45,7 @@ jobs:
         environment: [nprd, sim]
     name: Deploy ${{ matrix.environment }} Hub Network and Firewalls
     uses: ./.github/workflows/terraform_plan_apply.yml
+    needs: invoke_hub_azuremonitor_deploy
     with:
       environment: ${{ matrix.environment }}
       tenant: db
@@ -45,28 +62,12 @@ jobs:
         environment: [nprd, sim]
     name: Deploy ${{ matrix.environment }} Hub Bastion Host
     uses: ./.github/workflows/terraform_plan_apply.yml
-    needs: invoke_hub_deploy
+    needs: [invoke_hub_deploy, invoke_hub_azuremonitor_deploy]
     with:
       environment: ${{ matrix.environment }}
       tenant: db
       stack: bastion
       key: hub_bastion
-    secrets:
-      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-
-  invoke_hub_azuremonitor_deploy:
-    strategy:
-      fail-fast: false
-      matrix:
-        environment: [nprd, sim]
-    name: Deploy ${{ matrix.environment }} Hub Azure Monitor
-    uses: ./.github/workflows/terraform_plan_apply.yml
-    with:
-      environment: ${{ matrix.environment }}
-      tenant: db
-      stack: azuremonitor
-      key: hub_azure_monitor
     secrets:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
