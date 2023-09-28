@@ -101,50 +101,50 @@ resource "azurerm_resource_group" "hub" {
   tags     = local.tags
 }
 
-locals {
-  subnets = [
-    {
-      name     = "integration"
-      new_bits = 8
-    },
-    {
-      name     = "integration2"
-      new_bits = 8
-    },
-    {
-      name     = "integration3"
-      new_bits = 8
-    },
-    {
-      name     = "ehsplunk"
-      new_bits = 8
-    },
-    {
-      name     = "ServiceNowVM"
-      new_bits = 8
-    },
-    {
-      name     = "GatewaySubnet"
-      new_bits = 7
-    },
-    {
-      name     = "AzureFirewallSubnet"
-      new_bits = 3
-    },
-    {
-      name     = "AzureBastionSubnet"
-      new_bits = 3
-    },
-    {
-      name     = "vmss"
-      new_bits = 3
-    },
-    {
-      name     = "pvtendpoint"
-      new_bits = 1
-    },
-  ]
-}
+# locals {
+#   subnets = [
+#     {
+#       name     = "integration"
+#       new_bits = 8
+#     },
+#     {
+#       name     = "integration2"
+#       new_bits = 8
+#     },
+#     {
+#       name     = "integration3"
+#       new_bits = 8
+#     },
+#     {
+#       name     = "ehsplunk"
+#       new_bits = 8
+#     },
+#     {
+#       name     = "ServiceNowVM"
+#       new_bits = 8
+#     },
+#     {
+#       name     = "GatewaySubnet"
+#       new_bits = 7
+#     },
+#     {
+#       name     = "AzureFirewallSubnet"
+#       new_bits = 3
+#     },
+#     {
+#       name     = "AzureBastionSubnet"
+#       new_bits = 3
+#     },
+#     {
+#       name     = "vmss"
+#       new_bits = 3
+#     },
+#     {
+#       name     = "pvtendpoint"
+#       new_bits = 1
+#     },
+#   ]
+# }
 
 module "subnet_addressing" {
   source  = "hashicorp/subnets/cidr"
