@@ -9,59 +9,7 @@ locals {
     "role" = "hub_virtual_network"
   })
 
-  hub_virtual_networks = {
-    for r in var.regions : r => {
-      address_space                   = [local.address_spaces[r]]
-      name                            = module.naming[r].firewall.name
-      location                        = azurerm_resource_group.hub[r].location
-      resource_group_name             = azurerm_resource_group.hub[r].name
-      resource_group_creation_enabled = false
-      resource_group_lock_enabled     = false
-      mesh_peering_enabled            = true
-      routing_address_space           = [local.address_spaces[r]]
-      tags                            = local.network_tags
-      hub_router_ip_address           = "1.2.3.4"
-      #flow_timeout_in_minutes          = 4
-      subnets = {
-        # The module will currently fail attempting to attach a route table to AzureBastionSubnet
-        AzureBastionSubnet = {
-          address_prefixes             = [module.subnet_addressing[r].network_cidr_blocks["AzureBastionSubnet"]]
-          assign_generated_route_table = false
-        }
-        ServiceNowVMs = {
-          address_prefixes = [module.subnet_addressing[r].network_cidr_blocks["ServiceNowVM"]]
-        }
-      }
-      # firewall = {
-      #   sku_name              = "AZFW_VNet"
-      #   sku_tier              = "Standard"
-      #   threat_intel_mode     = "Off"
-      #   subnet_address_prefix = module.subnet_addressing[r].network_cidr_blocks["AzureFirewallSubnet"]
-      #   subnet_address_prefix = module.subnet_addressing[r].network_cidr_blocks["AzureFirewallSubnet"]
-      #   firewall_policy_id    = azurerm_firewall_policy.fwpolicy.id
-      #   tags                  = local.firewall_tags
-      # }
-    }
-  }
-
-}
-
-resource "azurerm_resource_group" "hub" {
-  for_each = toset(local.regions)
-
-  location = each.value
-  name     = module.naming[each.value].resource_group.name
-  tags     = local.tags
-}
-
-module "subnet_addressing" {
-  source  = "hashicorp/subnets/cidr"
-  version = "1.0.0"
-
-  for_each = local.address_spaces
-
-  base_cidr_block = each.value
-  networks = [
+  subnet_cidrs = [
     {
       name     = "integration"
       new_bits = 8
@@ -103,6 +51,117 @@ module "subnet_addressing" {
       new_bits = 1
     },
   ]
+
+  special_subnets = ["AzureBastionSubnet", "AzureFirewallSubnet", "GatewaySubnet", ]
+
+  # Maintain subnet name if in special_subnets, otherwise use naming module
+  subnets = {
+    for subnet in local.subnet_cidrs :
+    contains(local.special_subnets, subnet.name) ? subnet.name :
+    "${module.naming[local.regions[0]].subnet.name}-${subnet.name}" => {
+      address_prefixes             = [module.subnet_addressing[local.regions[0]].network_cidr_blocks[subnet.name]],
+      assign_generated_route_table = subnet.name == "AzureBastionSubnet" ? false : null
+    }
+  }
+
+  hub_virtual_networks = {
+    for r in var.regions : r => {
+      address_space                   = [local.address_spaces[r]]
+      name                            = module.naming[r].firewall.name
+      location                        = azurerm_resource_group.hub[r].location
+      resource_group_name             = azurerm_resource_group.hub[r].name
+      resource_group_creation_enabled = false
+      resource_group_lock_enabled     = false
+      mesh_peering_enabled            = true
+      routing_address_space           = [local.address_spaces[r]]
+      tags                            = local.network_tags
+      hub_router_ip_address           = "1.2.3.4"
+      #flow_timeout_in_minutes          = 4
+      subnets = local.subnets # {
+      #   # The module will currently fail attempting to attach a route table to AzureBastionSubnet
+      #   AzureBastionSubnet = {
+      #     address_prefixes             = [module.subnet_addressing[r].network_cidr_blocks["AzureBastionSubnet"]]
+      #     assign_generated_route_table = false
+      #   }
+      #   ServiceNowVMs = {
+      #     address_prefixes = [module.subnet_addressing[r].network_cidr_blocks["ServiceNowVM"]]
+      #   }
+      # }
+      # firewall = {
+      #   sku_name              = "AZFW_VNet"
+      #   sku_tier              = "Standard"
+      #   threat_intel_mode     = "Off"
+      #   subnet_address_prefix = module.subnet_addressing[r].network_cidr_blocks["AzureFirewallSubnet"]
+      #   subnet_address_prefix = module.subnet_addressing[r].network_cidr_blocks["AzureFirewallSubnet"]
+      #   firewall_policy_id    = azurerm_firewall_policy.fwpolicy.id
+      #   tags                  = local.firewall_tags
+      # }
+    }
+  }
+
+}
+
+resource "azurerm_resource_group" "hub" {
+  for_each = toset(local.regions)
+
+  location = each.value
+  name     = module.naming[each.value].resource_group.name
+  tags     = local.tags
+}
+
+locals {
+  subnets = [
+    {
+      name     = "integration"
+      new_bits = 8
+    },
+    {
+      name     = "integration2"
+      new_bits = 8
+    },
+    {
+      name     = "integration3"
+      new_bits = 8
+    },
+    {
+      name     = "ehsplunk"
+      new_bits = 8
+    },
+    {
+      name     = "ServiceNowVM"
+      new_bits = 8
+    },
+    {
+      name     = "GatewaySubnet"
+      new_bits = 7
+    },
+    {
+      name     = "AzureFirewallSubnet"
+      new_bits = 3
+    },
+    {
+      name     = "AzureBastionSubnet"
+      new_bits = 3
+    },
+    {
+      name     = "vmss"
+      new_bits = 3
+    },
+    {
+      name     = "pvtendpoint"
+      new_bits = 1
+    },
+  ]
+}
+
+module "subnet_addressing" {
+  source  = "hashicorp/subnets/cidr"
+  version = "1.0.0"
+
+  for_each = local.address_spaces
+
+  base_cidr_block = each.value
+  networks        = local.subnet_cidrs
 }
 
 module "hubnetworks" {
