@@ -76,17 +76,9 @@ locals {
       routing_address_space           = [local.address_spaces[r]]
       tags                            = local.network_tags
       hub_router_ip_address           = "1.2.3.4"
-      #flow_timeout_in_minutes          = 4
-      subnets = local.subnets # {
-      #   # The module will currently fail attempting to attach a route table to AzureBastionSubnet
-      #   AzureBastionSubnet = {
-      #     address_prefixes             = [module.subnet_addressing[r].network_cidr_blocks["AzureBastionSubnet"]]
-      #     assign_generated_route_table = false
-      #   }
-      #   ServiceNowVMs = {
-      #     address_prefixes = [module.subnet_addressing[r].network_cidr_blocks["ServiceNowVM"]]
-      #   }
-      # }
+      flow_timeout_in_minutes         = 4
+      subnets                         = local.subnets
+      # subnets = {
       # firewall = {
       #   sku_name              = "AZFW_VNet"
       #   sku_tier              = "Standard"
