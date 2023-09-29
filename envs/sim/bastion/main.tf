@@ -1,9 +1,9 @@
 terraform {
-  required_version = ">= 1.4.6"
+  required_version = ">= 1.5.6"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">=3.67.0"
+      version = ">= 3.71.0"
     }
   }
 
@@ -36,7 +36,8 @@ variable "tags" {
 }
 
 module "bastion" {
-  source      = "../../../modules/stack/bastion"
+  source = "github.com/rodmhgl/terraform-azurerm-bastion_stack?ref=v0.0.1"
+  # source      = "../../../modules/stack/bastion"
   prefix      = var.prefix
   environment = var.environment
   regions     = var.regions

@@ -78,7 +78,8 @@ output "diagnostics_stack" {
 }
 
 module "hub" {
-  source = "../../../modules/stack/hub"
+  source = "github.com/rodmhgl/terraform-azurerm-hub_stack?ref=v0.0.1"
+  # source = "../../../modules/stack/hub"
   # version = ""
   prefix         = var.prefix
   environment    = var.environment

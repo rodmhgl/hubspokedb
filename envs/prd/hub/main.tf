@@ -1,9 +1,9 @@
 terraform {
-  required_version = ">= 1.4.6"
+  required_version = ">= 1.5.6"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">=3.67.0"
+      version = ">= 3.71.0"
     }
   }
 
@@ -37,7 +37,8 @@ variable "tags" {
 }
 
 module "hub" {
-  source = "../../../modules/stack/hub"
+  source = "github.com/rodmhgl/terraform-azurerm-hub_stack?ref=v0.0.1"
+  # source = "../../../modules/stack/hub"
   # version = ""
   prefix      = var.prefix
   environment = var.environment

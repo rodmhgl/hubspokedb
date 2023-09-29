@@ -36,7 +36,8 @@ variable "tags" {
 }
 
 module "AzureMonitor" {
-  source      = "../../../modules/stack/azuremonitor"
+  source = "github.com/rodmhgl/terraform-azurerm-azmon_stack?ref=v0.0.1"
+  # source      = "../../../modules/stack/azuremonitor"
   prefix      = var.prefix
   environment = var.environment
   regions     = var.regions
