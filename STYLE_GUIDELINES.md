@@ -6,7 +6,7 @@ Style guidelines based on:
 - [Terraform Best Practices](https://www.terraform-best-practices.com/)
 - [Google Cloud's Best Practices for Terraform](https://cloud.google.com/docs/terraform/best-practices-for-terraform)
 
-### General Guidelines
+## General Guidelines
 
 1. All code should be formated to use the [HashiCorp Terraform style guidelines](https://developer.hashicorp.com/terraform/language/syntax/style) by utilizing the command `terraform fmt` as part of a [pre-commit](https://github.com/antonbabenko/pre-commit-terraform) hook.
 2. Name all configuration objects using `underscores` to delimit words and not `dashes`.
@@ -86,7 +86,7 @@ resource "azurerm_resource_group" "network" {
     1. It takes extra mental work to remember `azurerm_load_balancer.my_special_resource.id` versus `azurerm_load_balancer.this.id`.
 8. Always use singular nouns for names
 
-### Variables
+## Variables
 
 1. For clarity, use `name`, `description`, and `default` value for variables as defined in the "Argument Reference" section for the resource you are working with.
 2. Validation support for variables is still quite limited (e.g. can't access other variables or do lookups). Plan accordingly because in many cases this feature is useless.
@@ -111,7 +111,7 @@ resource "azurerm_resource_group" "network" {
     3. Removing a variable is backwards-incompatible.
     4. In cases where a literal is re-used in multiple places, you can use a [local value](https://developer.hashicorp.com/terraform/language/values/locals) without exposing it as a variable.
 
-### Outputs
+## Outputs
 
 Make outputs consistent and understandable outside of its scope (when a user is using a module it should be obvious the type and attribute of the value it returns).
 
@@ -158,7 +158,7 @@ output "name" {
 </tr>
 </table>
 
-### Data Sources
+## Data Sources
 
 1. Locate data sources near to the resources that reference them. For example, if you fetch an image to be used in launching an instance, place it alongside the instance instead of collecting data resources in their own file.
 2. However, if the number of data sources becomes large, consider moving them to a dedicated data.tf file.
