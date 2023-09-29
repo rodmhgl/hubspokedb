@@ -37,7 +37,7 @@ variable "tags" {
 }
 
 module "hub" {
-  source = "github.com/rodmhgl/terraform-azurerm-hub_stack?ref=v0.0.1"
+  source = "github.com/rodmhgl/terraform-azurerm-hub_stack?ref=v0.0.2"
   # source = "../../../modules/stack/hub"
   # version = ""
   prefix      = var.prefix
