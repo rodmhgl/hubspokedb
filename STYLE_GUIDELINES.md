@@ -131,7 +131,7 @@ Make outputs consistent and understandable outside of its scope (when a user is 
 <table>
 <tr></tr>
 <tr>
-<td> :+1: </td>
+<td> :heavy_check_mark: </td>
 <td>
 
 ```hcl
@@ -144,7 +144,7 @@ output "name" {
 </td>
 <tr></tr>
 <tr>
-<td> :-1: </td>
+<td> :x: </td>
 <td>
 
 ```hcl
